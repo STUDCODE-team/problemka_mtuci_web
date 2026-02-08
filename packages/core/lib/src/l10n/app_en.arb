@@ -1,0 +1,126 @@
+{
+  "@@locale": "en",
+  "hello": "Hello!",
+  "@hello": {},
+  "welcome": "Welcome, {name}!",
+  "@welcome": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "authTitle": "Sign in",
+  "@authTitle": {},
+  "authSubtitle": "University report system",
+  "@authSubtitle": {},
+  "authEmailLabel": "Email",
+  "@authEmailLabel": {},
+  "authEmailHint": "sample@mtuci.edu",
+  "@authEmailHint": {},
+  "authSendCode": "Send code",
+  "@authSendCode": {},
+  "authInvalidEmail": "Enter a valid email.",
+  "@authInvalidEmail": {},
+  "authUnknownEmail": "This email is not in the mock database.",
+  "@authUnknownEmail": {},
+  "authDemoEmails": "Demo emails: student@mtuci.edu, teacher@mtuci.edu",
+  "@authDemoEmails": {},
+  "authCodeTitle": "Enter code",
+  "@authCodeTitle": {},
+  "authCodeSubtitle": "We sent a code to {email}",
+  "@authCodeSubtitle": {
+    "placeholders": {
+      "email": {}
+    }
+  },
+  "authCodeLabel": "Code",
+  "@authCodeLabel": {},
+  "authCodeHint": "123456",
+  "@authCodeHint": {},
+  "authVerifyCode": "Verify code",
+  "@authVerifyCode": {},
+  "authResendCode": "Resend code",
+  "@authResendCode": {},
+  "authResentMessage": "Code sent again.",
+  "@authResentMessage": {},
+  "authInvalidCode": "Invalid code. Try 123456.",
+  "@authInvalidCode": {},
+  "authDemoCode": "Demo code: {code}",
+  "@authDemoCode": {
+    "placeholders": {
+      "code": {}
+    }
+  },
+  "authSuccessTitle": "You're in",
+  "@authSuccessTitle": {},
+  "authSuccessSubtitle": "Welcome, {name}!",
+  "@authSuccessSubtitle": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "authContinue": "Continue",
+  "@authContinue": {},
+  "homeTitle": "Home",
+  "@homeTitle": {},
+  "homeSubtitle": "Mock user role: {role}",
+  "@homeSubtitle": {
+    "placeholders": {
+      "role": {}
+    }
+  },
+  "reportAppTitle": "University Reporting App",
+  "@reportAppTitle": {},
+  "reportListTitle": "Reports",
+  "@reportListTitle": {},
+  "reportFilterAll": "All",
+  "@reportFilterAll": {},
+  "reportListEmpty": "No reports found.",
+  "@reportListEmpty": {},
+  "reportCreateButton": "Report a problem",
+  "@reportCreateButton": {},
+  "reportStatusNew": "New",
+  "@reportStatusNew": {},
+  "reportStatusInProgress": "In progress",
+  "@reportStatusInProgress": {},
+  "reportStatusResolved": "Resolved",
+  "@reportStatusResolved": {},
+  "reportDetailTitle": "Report details",
+  "@reportDetailTitle": {},
+  "reportDetailLocation": "Location",
+  "@reportDetailLocation": {},
+  "reportDetailRoom": "Room",
+  "@reportDetailRoom": {},
+  "reportDetailCategory": "Category",
+  "@reportDetailCategory": {},
+  "reportDetailPriority": "Priority",
+  "@reportDetailPriority": {},
+  "reportDetailReporter": "Reporter",
+  "@reportDetailReporter": {},
+  "reportDetailDate": "Date",
+  "@reportDetailDate": {},
+  "reportNotFound": "Report not found.",
+  "@reportNotFound": {},
+  "reportDialogTitle": "Report a problem",
+  "@reportDialogTitle": {},
+  "reportDialogTopic": "Topic",
+  "@reportDialogTopic": {},
+  "reportDialogTopicHint": "Short issue title",
+  "@reportDialogTopicHint": {},
+  "reportDialogLocation": "Location",
+  "@reportDialogLocation": {},
+  "reportDialogLocationHint": "Building, floor, room",
+  "@reportDialogLocationHint": {},
+  "reportDialogCategory": "Category",
+  "@reportDialogCategory": {},
+  "reportDialogCategoryHint": "Electricity, plumbing, etc.",
+  "@reportDialogCategoryHint": {},
+  "reportDialogDescription": "Description",
+  "@reportDialogDescription": {},
+  "reportDialogDescriptionHint": "Describe the issue briefly",
+  "@reportDialogDescriptionHint": {},
+  "reportDialogSubmit": "Send",
+  "@reportDialogSubmit": {},
+  "reportDialogSuccess": "Report submitted (mock).",
+  "@reportDialogSuccess": {}
+}
+  

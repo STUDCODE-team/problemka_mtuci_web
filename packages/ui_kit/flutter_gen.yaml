@@ -1,0 +1,7 @@
+output: lib/gen/
+line_length: 100
+
+assets:
+  outputs:
+    class_name: Assets
+    package_parameter_enabled: true
