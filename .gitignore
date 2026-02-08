@@ -1,3 +1,34 @@
-.dart_tool
-.vscode
+# Dart / Flutter
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.melos_tool/
+flutter_*.log
+
+# Android
+android/.gradle/
+android/local.properties
+android/**/GeneratedPluginRegistrant.java
+
+# iOS
+ios/Flutter/ephemeral/
+
+# Coverage
+coverage/
+lcov.info
+
+# IDE / editor
+.idea/
+*.iml
+.vscode/*
+!.vscode/launch.json
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# OS
 .DS_Store
+Thumbs.db
