@@ -37,10 +37,10 @@ pipeline {
             git clone --depth 1 --branch stable https://github.com/flutter/flutter.git "${FLUTTER_HOME}"
           fi
 
-          ${FLUTTER_BIN} --version
-          ${FLUTTER_BIN} config --enable-web
-          ${FLUTTER_BIN} precache --web
-          ${DART_BIN} --version
+          "${FLUTTER_BIN}" --version
+          "${FLUTTER_BIN}" config --enable-web
+          "${FLUTTER_BIN}" precache --web
+          "${DART_BIN}" --version
         '''
       }
     }
@@ -50,7 +50,7 @@ pipeline {
         sh '''
           set -eux
           DART_BIN="${WORKSPACE}/.flutter-sdk/bin/dart"
-          ${DART_BIN} pub get
+          "${DART_BIN}" pub get
         '''
       }
     }
@@ -61,7 +61,7 @@ pipeline {
           sh '''
             set -eux
             FLUTTER_BIN="${WORKSPACE}/.flutter-sdk/bin/flutter"
-            ${FLUTTER_BIN} build web --release --no-tree-shake-icons --output="${WORKSPACE}/build/client_app"
+            "${FLUTTER_BIN}" build web --release --no-tree-shake-icons --output="${WORKSPACE}/build/client_app"
           '''
         }
       }
@@ -73,7 +73,7 @@ pipeline {
           sh '''
             set -eux
             FLUTTER_BIN="${WORKSPACE}/.flutter-sdk/bin/flutter"
-            ${FLUTTER_BIN} build web --release --no-tree-shake-icons --output="${WORKSPACE}/build/admin_panel"
+            "${FLUTTER_BIN}" build web --release --no-tree-shake-icons --output="${WORKSPACE}/build/admin_panel"
           '''
         }
       }
