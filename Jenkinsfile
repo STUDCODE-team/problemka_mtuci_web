@@ -7,8 +7,6 @@ pipeline {
   }
 
   environment {
-    FLUTTER_BIN = '/opt/flutter/bin/flutter'
-    DART_BIN = '/opt/flutter/bin/dart'
     APP_USER = 'www-data'
     APP_GROUP = 'www-data'
 
@@ -26,26 +24,58 @@ pipeline {
       }
     }
 
+    stage('Setup Flutter SDK') {
+      steps {
+        sh '''
+          set -eux
+          FLUTTER_HOME="${WORKSPACE}/.flutter-sdk"
+          FLUTTER_BIN="${FLUTTER_HOME}/bin/flutter"
+          DART_BIN="${FLUTTER_HOME}/bin/dart"
+
+          if [ ! -x "${FLUTTER_BIN}" ]; then
+            rm -rf "${FLUTTER_HOME}"
+            git clone --depth 1 --branch stable https://github.com/flutter/flutter.git "${FLUTTER_HOME}"
+          fi
+
+          ${FLUTTER_BIN} --version
+          ${FLUTTER_BIN} config --enable-web
+          ${FLUTTER_BIN} precache --web
+          ${DART_BIN} --version
+        '''
+      }
+    }
+
     stage('Install dependencies') {
       steps {
         sh '''
           set -eux
-          ${DART_BIN} pub global activate melos
+          DART_BIN="${WORKSPACE}/.flutter-sdk/bin/dart"
           ${DART_BIN} pub get
         '''
       }
     }
 
-    stage('Build web apps') {
+    stage('Build client app') {
       steps {
-        sh '''
-          set -eux
-          ${FLUTTER_BIN} --version
-          ${FLUTTER_BIN} config --enable-web
+        dir('apps/client_app') {
+          sh '''
+            set -eux
+            FLUTTER_BIN="${WORKSPACE}/.flutter-sdk/bin/flutter"
+            ${FLUTTER_BIN} build web --release --no-tree-shake-icons --output="${WORKSPACE}/build/client_app"
+          '''
+        }
+      }
+    }
 
-          ${FLUTTER_BIN} build web --release --web-renderer canvaskit --no-tree-shake-icons --target=apps/client_app/lib/main.dart --output=build/client_app
-          ${FLUTTER_BIN} build web --release --web-renderer canvaskit --no-tree-shake-icons --target=apps/admin_panel/lib/main.dart --output=build/admin_panel
-        '''
+    stage('Build admin app') {
+      steps {
+        dir('apps/admin_panel') {
+          sh '''
+            set -eux
+            FLUTTER_BIN="${WORKSPACE}/.flutter-sdk/bin/flutter"
+            ${FLUTTER_BIN} build web --release --no-tree-shake-icons --output="${WORKSPACE}/build/admin_panel"
+          '''
+        }
       }
     }
 
