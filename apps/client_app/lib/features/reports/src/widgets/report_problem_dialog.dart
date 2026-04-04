@@ -1,5 +1,7 @@
+import 'package:client_app/features/reports/src/bloc/reports_bloc.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 class ReportProblemDialog extends StatefulWidget {
@@ -25,61 +27,86 @@ class _ReportProblemDialogState extends State<ReportProblemDialog> {
     super.dispose();
   }
 
-  Future<void> _submit() async {
+  void _submit() {
+    final title = _titleController.text.trim();
+    final location = _locationController.text.trim();
+    final category = _categoryController.text.trim();
+    final description = _descriptionController.text.trim();
+
+    if (title.isEmpty || location.isEmpty || category.isEmpty || description.isEmpty) {
+      return;
+    }
+
     setState(() => _isSubmitting = true);
-    await Future<void>.delayed(const Duration(milliseconds: 400));
-    if (!mounted) return;
-    setState(() => _isSubmitting = false);
-    Navigator.of(context).pop();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(S.of(context).reportDialogSuccess)),
-    );
+
+    context.read<ReportsBloc>().add(CreateReport(
+          title: title,
+          description: description,
+          location: location,
+          category: category,
+        ));
   }
 
   @override
   Widget build(BuildContext context) {
     final strings = S.of(context);
-    return AlertDialog(
-      title: Text(strings.reportDialogTitle),
-      content: SizedBox(
-        width: 420,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            spacing: 12,
-            children: [
-              PMInput(
-                label: strings.reportDialogTopic,
-                hint: strings.reportDialogTopicHint,
-                controller: _titleController,
-              ),
-              PMInput(
-                label: strings.reportDialogLocation,
-                hint: strings.reportDialogLocationHint,
-                controller: _locationController,
-              ),
-              PMInput(
-                label: strings.reportDialogCategory,
-                hint: strings.reportDialogCategoryHint,
-                controller: _categoryController,
-              ),
-              PMInput(
-                label: strings.reportDialogDescription,
-                hint: strings.reportDialogDescriptionHint,
-                controller: _descriptionController,
-              ),
-            ],
+
+    return BlocListener<ReportsBloc, ReportsState>(
+      listener: (context, state) {
+        if (state is ReportCreated) {
+          Navigator.of(context).pop(true);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(strings.reportDialogSuccess)),
+          );
+        } else if (state is ReportsError) {
+          setState(() => _isSubmitting = false);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.message)),
+          );
+        }
+      },
+      child: AlertDialog(
+        title: Text(strings.reportDialogTitle),
+        content: SizedBox(
+          width: 420,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 12,
+              children: [
+                PMInput(
+                  label: strings.reportDialogTopic,
+                  hint: strings.reportDialogTopicHint,
+                  controller: _titleController,
+                ),
+                PMInput(
+                  label: strings.reportDialogLocation,
+                  hint: strings.reportDialogLocationHint,
+                  controller: _locationController,
+                ),
+                PMInput(
+                  label: strings.reportDialogCategory,
+                  hint: strings.reportDialogCategoryHint,
+                  controller: _categoryController,
+                ),
+                PMInput(
+                  label: strings.reportDialogDescription,
+                  hint: strings.reportDialogDescriptionHint,
+                  controller: _descriptionController,
+                ),
+              ],
+            ),
           ),
         ),
+        actionsPadding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+        actions: [
+          PMButton(
+            text: strings.reportDialogSubmit,
+            isLoading: _isSubmitting,
+            onPressed: _isSubmitting ? () {} : _submit,
+          ),
+        ],
       ),
-      actionsPadding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
-      actions: [
-        PMButton(
-          text: strings.reportDialogSubmit,
-          isLoading: _isSubmitting,
-          onPressed: _isSubmitting ? () {} : _submit,
-        ),
-      ],
     );
   }
 }

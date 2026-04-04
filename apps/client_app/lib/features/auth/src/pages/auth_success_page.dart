@@ -26,7 +26,7 @@ class AuthSuccessPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 spacing: 16,
                 children: [
-                  Spacer(flex: 1),
+                  const Spacer(flex: 1),
                   Icon(Icons.check_circle, size: 96, color: context.colors.primary),
                   Text(strings.authSuccessTitle, style: context.texts.headlineLarge),
                   Text(
@@ -37,10 +37,10 @@ class AuthSuccessPage extends StatelessWidget {
                   PMButton(
                     text: strings.authContinue,
                     onPressed: () {
-                      context.router.replaceAll([HomeRoute(name: name, role: role)]);
+                      context.router.replaceAll([const HomeRoute()]);
                     },
                   ),
-                  Spacer(flex: 2),
+                  const Spacer(flex: 2),
                 ],
               ),
             ),

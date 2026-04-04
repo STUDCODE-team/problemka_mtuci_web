@@ -214,7 +214,7 @@ abstract class S {
   /// No description provided for @authSuccessTitle.
   ///
   /// In en, this message translates to:
-  /// **'You're in'**
+  /// **'You\'re in'**
   String get authSuccessTitle;
 
   /// No description provided for @authSuccessSubtitle.
@@ -400,8 +400,68 @@ abstract class S {
   /// No description provided for @reportDialogSuccess.
   ///
   /// In en, this message translates to:
-  /// **'Report submitted (mock).'**
+  /// **'Report submitted.'**
   String get reportDialogSuccess;
+
+  /// No description provided for @reportCommentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments'**
+  String get reportCommentsTitle;
+
+  /// No description provided for @reportCommentsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No comments yet.'**
+  String get reportCommentsEmpty;
+
+  /// No description provided for @reportCommentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a comment...'**
+  String get reportCommentHint;
+
+  /// No description provided for @reportHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Status history'**
+  String get reportHistoryTitle;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get settingsTheme;
+
+  /// No description provided for @settingsThemeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get settingsThemeLight;
+
+  /// No description provided for @settingsThemeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get settingsThemeDark;
+
+  /// No description provided for @settingsLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settingsLanguage;
+
+  /// No description provided for @settingsLogout.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get settingsLogout;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

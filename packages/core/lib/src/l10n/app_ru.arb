@@ -50,6 +50,16 @@
   "reportDialogDescription": "Описание",
   "reportDialogDescriptionHint": "Опишите проблему",
   "reportDialogSubmit": "Отправить",
-  "reportDialogSuccess": "Отчет отправлен (mock)."
+  "reportDialogSuccess": "Обращение отправлено.",
+  "reportCommentsTitle": "Комментарии",
+  "reportCommentsEmpty": "Комментариев пока нет.",
+  "reportCommentHint": "Написать комментарий...",
+  "reportHistoryTitle": "История статусов",
+  "settingsTitle": "Настройки",
+  "settingsTheme": "Тема оформления",
+  "settingsThemeLight": "Светлая",
+  "settingsThemeDark": "Тёмная",
+  "settingsLanguage": "Язык интерфейса",
+  "settingsLogout": "Выйти из аккаунта"
 }
   

@@ -38,7 +38,8 @@ class SRu extends S {
   String get authUnknownEmail => 'Этого email нет в моковой базе.';
 
   @override
-  String get authDemoEmails => 'Демо email: student@mtuci.edu, teacher@mtuci.edu';
+  String get authDemoEmails =>
+      'Демо email: student@mtuci.edu, teacher@mtuci.edu';
 
   @override
   String get authCodeTitle => 'Введите код';
@@ -169,5 +170,35 @@ class SRu extends S {
   String get reportDialogSubmit => 'Отправить';
 
   @override
-  String get reportDialogSuccess => 'Отчет отправлен (mock).';
+  String get reportDialogSuccess => 'Обращение отправлено.';
+
+  @override
+  String get reportCommentsTitle => 'Комментарии';
+
+  @override
+  String get reportCommentsEmpty => 'Комментариев пока нет.';
+
+  @override
+  String get reportCommentHint => 'Написать комментарий...';
+
+  @override
+  String get reportHistoryTitle => 'История статусов';
+
+  @override
+  String get settingsTitle => 'Настройки';
+
+  @override
+  String get settingsTheme => 'Тема оформления';
+
+  @override
+  String get settingsThemeLight => 'Светлая';
+
+  @override
+  String get settingsThemeDark => 'Тёмная';
+
+  @override
+  String get settingsLanguage => 'Язык интерфейса';
+
+  @override
+  String get settingsLogout => 'Выйти из аккаунта';
 }

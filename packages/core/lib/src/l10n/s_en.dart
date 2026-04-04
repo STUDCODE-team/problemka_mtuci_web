@@ -38,7 +38,8 @@ class SEn extends S {
   String get authUnknownEmail => 'This email is not in the mock database.';
 
   @override
-  String get authDemoEmails => 'Demo emails: student@mtuci.edu, teacher@mtuci.edu';
+  String get authDemoEmails =>
+      'Demo emails: student@mtuci.edu, teacher@mtuci.edu';
 
   @override
   String get authCodeTitle => 'Enter code';
@@ -72,7 +73,7 @@ class SEn extends S {
   }
 
   @override
-  String get authSuccessTitle => "You're in";
+  String get authSuccessTitle => 'You\'re in';
 
   @override
   String authSuccessSubtitle(Object name) {
@@ -169,5 +170,35 @@ class SEn extends S {
   String get reportDialogSubmit => 'Send';
 
   @override
-  String get reportDialogSuccess => 'Report submitted (mock).';
+  String get reportDialogSuccess => 'Report submitted.';
+
+  @override
+  String get reportCommentsTitle => 'Comments';
+
+  @override
+  String get reportCommentsEmpty => 'No comments yet.';
+
+  @override
+  String get reportCommentHint => 'Write a comment...';
+
+  @override
+  String get reportHistoryTitle => 'Status history';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsTheme => 'Theme';
+
+  @override
+  String get settingsThemeLight => 'Light';
+
+  @override
+  String get settingsThemeDark => 'Dark';
+
+  @override
+  String get settingsLanguage => 'Language';
+
+  @override
+  String get settingsLogout => 'Log out';
 }

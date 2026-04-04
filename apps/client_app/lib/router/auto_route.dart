@@ -13,6 +13,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: AuthSuccessRoute.page),
     AutoRoute(page: HomeRoute.page),
     AutoRoute(page: ReportDetailRoute.page),
+    AutoRoute(page: SettingsRoute.page),
   ];
 
   @override
