@@ -13,20 +13,30 @@ class PMButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: isLoading ? null : onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF322671),
-        foregroundColor: Colors.white,
+        backgroundColor: context.colors.primary,
+        foregroundColor: context.colors.onPrimary,
+        disabledBackgroundColor: context.colors.primary.withValues(alpha: 0.6),
         padding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         minimumSize: const Size(double.infinity, 60),
         elevation: 0,
       ),
       child: isLoading
-          ? const SizedBox(
+          ? SizedBox(
               height: 22,
               width: 22,
-              child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.white),
+              child: CircularProgressIndicator(
+                strokeWidth: 2.5,
+                color: context.colors.onPrimary,
+              ),
             )
-          : Text(text, style: context.texts.bodyLarge?.copyWith(color: context.colors.secondary)),
+          : Text(
+              text,
+              style: context.texts.bodyLarge?.copyWith(
+                color: context.colors.onPrimary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
     );
   }
 }

@@ -55,7 +55,7 @@ class AuthInterceptor extends Interceptor {
       final newAccessToken = response.data['access_token'] as String;
       final newRefreshToken = response.data['refresh_token'] as String;
 
-      tokenRepository.setAccessToken(newAccessToken);
+      await tokenRepository.setAccessToken(newAccessToken);
       await tokenRepository.saveRefreshToken(newRefreshToken);
 
       // Retry original request

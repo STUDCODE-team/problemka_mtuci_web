@@ -1,4 +1,5 @@
 import 'package:client_app/features/reports/src/bloc/reports_bloc.dart';
+import 'package:client_app/features/reports/src/models/report.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,15 +15,14 @@ class ReportProblemDialog extends StatefulWidget {
 class _ReportProblemDialogState extends State<ReportProblemDialog> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
-  final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  ReportCategory? _selectedCategory;
   bool _isSubmitting = false;
 
   @override
   void dispose() {
     _titleController.dispose();
     _locationController.dispose();
-    _categoryController.dispose();
     _descriptionController.dispose();
     super.dispose();
   }
@@ -30,10 +30,9 @@ class _ReportProblemDialogState extends State<ReportProblemDialog> {
   void _submit() {
     final title = _titleController.text.trim();
     final location = _locationController.text.trim();
-    final category = _categoryController.text.trim();
     final description = _descriptionController.text.trim();
 
-    if (title.isEmpty || location.isEmpty || category.isEmpty || description.isEmpty) {
+    if (title.isEmpty || location.isEmpty || description.isEmpty || _selectedCategory == null) {
       return;
     }
 
@@ -43,7 +42,7 @@ class _ReportProblemDialogState extends State<ReportProblemDialog> {
           title: title,
           description: description,
           location: location,
-          category: category,
+          category: _selectedCategory!.apiValue,
         ));
   }
 
@@ -84,10 +83,17 @@ class _ReportProblemDialogState extends State<ReportProblemDialog> {
                   hint: strings.reportDialogLocationHint,
                   controller: _locationController,
                 ),
-                PMInput(
-                  label: strings.reportDialogCategory,
-                  hint: strings.reportDialogCategoryHint,
-                  controller: _categoryController,
+                DropdownButtonFormField<ReportCategory>(
+                  initialValue: _selectedCategory,
+                  decoration: InputDecoration(
+                    labelText: strings.reportDialogCategory,
+                    border: const OutlineInputBorder(),
+                  ),
+                  hint: Text(strings.reportDialogCategoryHint),
+                  items: ReportCategory.values.map((c) {
+                    return DropdownMenuItem(value: c, child: Text(c.label));
+                  }).toList(),
+                  onChanged: (val) => setState(() => _selectedCategory = val),
                 ),
                 PMInput(
                   label: strings.reportDialogDescription,

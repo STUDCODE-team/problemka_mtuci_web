@@ -4,7 +4,6 @@ import 'package:client_app/router/auto_route.gr.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ui_kit/gen/assets.gen.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 @RoutePage()
@@ -40,9 +39,7 @@ class _AuthEnterEmailPageState extends State<AuthEnterEmailPage> {
     final strings = S.of(context);
 
     if (!_isValidEmail(email)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(strings.authInvalidEmail)),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(strings.authInvalidEmail)));
       return;
     }
 
@@ -60,9 +57,7 @@ class _AuthEnterEmailPageState extends State<AuthEnterEmailPage> {
         } else if (state is AuthSuccess) {
           context.router.replaceAll([HomeRoute()]);
         } else if (state is AuthError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
         }
       },
       child: Scaffold(
@@ -79,7 +74,7 @@ class _AuthEnterEmailPageState extends State<AuthEnterEmailPage> {
                   spacing: 16,
                   children: [
                     const Spacer(flex: 1),
-                    Assets.images.mtuciPng.image(package: "ui_kit", width: 200),
+                    // Assets.images.mtuciPng.image(package: "ui_kit", width: 200),
                     Padding(
                       padding: const EdgeInsets.only(top: 16),
                       child: Text(strings.authTitle, style: context.texts.headlineLarge),

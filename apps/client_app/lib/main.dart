@@ -14,12 +14,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ui_kit/ui_kit.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  const apiBaseUrl = String.fromEnvironment('API_BASE_URL', defaultValue: 'http://localhost');
+  const apiBaseUrl = String.fromEnvironment(
+    'API_BASE_URL',
+    defaultValue: 'https://devapi.problemka-mtuci.tech',
+  );
 
   final tokenRepository = TokenRepository();
+  // Load stored access token on app start
+  final storedToken = await tokenRepository.getAccessToken();
+  if (storedToken != null) {
+    tokenRepository.setAccessTokenSync(storedToken);
+  }
+
   late final AppRouter appRouter;
   appRouter = AppRouter();
 
@@ -32,18 +41,17 @@ void main() {
     },
   );
 
-  final authRepository = AuthRepository(
-    apiClient: apiClient,
-    tokenRepository: tokenRepository,
-  );
+  final authRepository = AuthRepository(apiClient: apiClient, tokenRepository: tokenRepository);
 
   final reportsRepository = ReportsRepository(apiClient: apiClient);
 
-  runApp(MyApp(
-    appRouter: appRouter,
-    authRepository: authRepository,
-    reportsRepository: reportsRepository,
-  ));
+  runApp(
+    MyApp(
+      appRouter: appRouter,
+      authRepository: authRepository,
+      reportsRepository: reportsRepository,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

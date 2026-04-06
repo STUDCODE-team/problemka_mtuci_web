@@ -148,9 +148,18 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
 
   String _extractError(DioException e) {
     final data = e.response?.data;
-    if (data is Map<String, dynamic> && data.containsKey('detail')) {
-      return data['detail'] as String;
+    if (data is Map<String, dynamic>) {
+      // Validation error format: {detail: "Validation error", errors: [{field, message}]}
+      final errors = data['errors'];
+      if (errors is List && errors.isNotEmpty) {
+        return errors
+            .whereType<Map<String, dynamic>>()
+            .map((e) => '${e['field']}: ${e['message']}')
+            .join('\n');
+      }
+      final detail = data['detail'];
+      if (detail is String) return detail;
     }
-    return 'Connection error';
+    return 'Ошибка соединения';
   }
 }

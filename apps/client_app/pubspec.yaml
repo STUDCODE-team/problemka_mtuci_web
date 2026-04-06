@@ -27,6 +27,8 @@ dependencies:
   dio: ^5.7.0
   flutter_bloc: ^9.1.0
   shared_preferences: ^2.3.0
+  talker: ^5.1.16
+  talker_dio_logger: ^5.1.16
 
 dev_dependencies:
   flutter_test:

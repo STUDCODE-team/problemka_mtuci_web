@@ -1,3 +1,51 @@
+enum ReportCategory {
+  electrical,
+  plumbing,
+  furniture,
+  itEquipment,
+  cleaning,
+  heating,
+  other;
+
+  String get apiValue {
+    switch (this) {
+      case ReportCategory.electrical:
+        return 'electrical';
+      case ReportCategory.plumbing:
+        return 'plumbing';
+      case ReportCategory.furniture:
+        return 'furniture';
+      case ReportCategory.itEquipment:
+        return 'it_equipment';
+      case ReportCategory.cleaning:
+        return 'cleaning';
+      case ReportCategory.heating:
+        return 'heating';
+      case ReportCategory.other:
+        return 'other';
+    }
+  }
+
+  String get label {
+    switch (this) {
+      case ReportCategory.electrical:
+        return 'Электрика';
+      case ReportCategory.plumbing:
+        return 'Сантехника';
+      case ReportCategory.furniture:
+        return 'Мебель';
+      case ReportCategory.itEquipment:
+        return 'IT-оборудование';
+      case ReportCategory.cleaning:
+        return 'Уборка';
+      case ReportCategory.heating:
+        return 'Отопление';
+      case ReportCategory.other:
+        return 'Другое';
+    }
+  }
+}
+
 enum ReportStatus {
   newReport,
   inProgress,

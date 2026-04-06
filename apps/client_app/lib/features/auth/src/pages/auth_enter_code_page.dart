@@ -20,6 +20,18 @@ class _AuthEnterCodePageState extends State<AuthEnterCodePage> {
   final TextEditingController _codeController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    // Guard against web refresh: email arg is empty when no args were serialised
+    // in the URL. Redirect back to the email entry page immediately.
+    if (widget.email.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) context.router.replaceAll([const AuthEnterEmailRoute()]);
+      });
+    }
+  }
+
+  @override
   void dispose() {
     _codeController.dispose();
     super.dispose();

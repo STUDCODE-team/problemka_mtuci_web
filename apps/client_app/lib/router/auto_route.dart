@@ -4,7 +4,10 @@ import 'package:client_app/router/auto_route.gr.dart';
 @AutoRouterConfig(replaceInRouteName: 'Screen|Page,Route')
 class AppRouter extends RootStackRouter {
   @override
-  RouteType get defaultRouteType => RouteType.material();
+  RouteType get defaultRouteType => RouteType.custom(
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        duration: const Duration(milliseconds: 180),
+      );
 
   @override
   List<AutoRoute> get routes => [

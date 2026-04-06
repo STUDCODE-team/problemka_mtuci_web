@@ -41,7 +41,9 @@ class AuthEnterCodeRoute extends _i7.PageRouteInfo<AuthEnterCodeRouteArgs> {
   static _i7.PageInfo page = _i7.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<AuthEnterCodeRouteArgs>();
+      final args = data.argsAs<AuthEnterCodeRouteArgs>(
+        orElse: () => const AuthEnterCodeRouteArgs(email: ''),
+      );
       return _i1.AuthEnterCodePage(key: args.key, email: args.email);
     },
   );

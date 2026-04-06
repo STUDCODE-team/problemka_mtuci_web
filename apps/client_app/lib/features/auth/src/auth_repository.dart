@@ -70,7 +70,7 @@ class AuthRepository {
       role: data['role'] as String,
     );
 
-    _tokenRepository.setAccessToken(result.accessToken);
+    await _tokenRepository.setAccessToken(result.accessToken);
     await _tokenRepository.saveRefreshToken(result.refreshToken);
 
     return result;
@@ -111,7 +111,7 @@ class AuthRepository {
       });
 
       final data = response.data as Map<String, dynamic>;
-      _tokenRepository.setAccessToken(data['access_token'] as String);
+      await _tokenRepository.setAccessToken(data['access_token'] as String);
       await _tokenRepository.saveRefreshToken(data['refresh_token'] as String);
       return true;
     } on DioException {
