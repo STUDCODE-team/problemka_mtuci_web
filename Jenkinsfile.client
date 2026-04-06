@@ -48,7 +48,14 @@ pipeline {
         dir('apps/client_app') {
           sh '''
             set -eux
-            "${FLUTTER_BIN}" build web --release --no-pub --no-tree-shake-icons --no-wasm-dry-run --output="${WORKSPACE}/build/client_app"
+            "${FLUTTER_BIN}" build web \
+              --release \
+              --no-pub \
+              --no-tree-shake-icons \
+              --no-wasm-dry-run \
+              --web-renderer html \
+              --dart-define=API_BASE_URL=https://devapi.problemka-mtuci.tech \
+              --output="${WORKSPACE}/build/client_app"
           '''
         }
       }
