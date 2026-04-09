@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -21,24 +21,121 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="description" content="Сервис для подачи и отслеживания заявок МТУСИ">
 
-  <!-- PWA theme color -->
-  <meta name="theme-color" content="#372678">
+  <!-- PWA theme color — light/dark adaptive -->
+  <meta name="theme-color" content="#EEEFF6" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#161929" media="(prefers-color-scheme: dark)">
 
   <!-- iOS PWA meta tags -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Problemka">
+  <meta name="apple-mobile-web-app-title" content="Проблемка">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
   <link rel="apple-touch-icon" sizes="192x192" href="icons/Icon-192.png">
   <link rel="apple-touch-icon" sizes="512x512" href="icons/Icon-512.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" href="favicon.png">
 
-  <title>Problemka MTUCI</title>
+  <title>Проблемка МТУСИ</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #EEEFF6;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #161929;
+      }
+    }
+
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      background-color: #EEEFF6;
+      z-index: 9999;
+      transition: opacity 0.35s ease;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      #loading-screen {
+        background-color: #161929;
+      }
+    }
+
+    .loading-logo {
+      width: 88px;
+      height: 88px;
+      background-color: #372678;
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .loading-logo svg {
+      width: 52px;
+      height: 52px;
+    }
+
+    .loading-spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid rgba(55, 38, 120, 0.18);
+      border-top-color: #372678;
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .loading-spinner {
+        border-color: rgba(91, 79, 207, 0.18);
+        border-top-color: #5B4FCF;
+      }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    #loading-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+  </style>
 </head>
 <body>
+  <div id="loading-screen">
+    <div class="loading-logo">
+      <svg viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="9" y="10" width="10" height="32" rx="2" fill="white"/>
+        <rect x="9" y="10" width="28" height="10" rx="2" fill="white"/>
+        <rect x="9" y="31" width="28" height="9" rx="2" fill="white"/>
+        <rect x="30" y="10" width="7" height="30" rx="2" fill="white"/>
+      </svg>
+    </div>
+    <div class="loading-spinner"></div>
+  </div>
+
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var screen = document.getElementById('loading-screen');
+      if (screen) {
+        screen.classList.add('hidden');
+        setTimeout(function () { screen.remove(); }, 400);
+      }
+    });
+  </script>
+
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 name: admin_panel
-description: "A new Flutter project."
+description: "Admin panel for the university reporting system."
 resolution: workspace
 version: 1.0.0+1
-
+publish_to: none
 
 environment:
   sdk: ^3.9.0
@@ -11,13 +11,30 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
+  ui_kit:
+    path: ../../packages/ui_kit
+
+  core:
+    path: ../../packages/core
+
   cupertino_icons: ^1.0.8
+  auto_route: ^10.2.0
+  dio: ^5.7.0
+  flutter_bloc: ^9.1.0
+  shared_preferences: ^2.3.0
+  talker: ^5.1.16
+  talker_dio_logger: ^5.1.16
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^5.0.0
+  auto_route_generator: ^10.2.5
+  build_runner: ^2.10.1
 
 flutter:
   uses-material-design: true
