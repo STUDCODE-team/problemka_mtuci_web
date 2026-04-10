@@ -201,4 +201,19 @@ class SRu extends S {
 
   @override
   String get settingsLogout => 'Выйти из аккаунта';
+
+  @override
+  String get notificationsTitle => 'Уведомления';
+
+  @override
+  String get notificationsEmpty => 'Уведомлений пока нет.';
+
+  @override
+  String get notificationsMarkAllRead => 'Прочитать все';
+
+  @override
+  String get notificationStatusChanged => 'Статус изменён на';
+
+  @override
+  String get notificationStatusRejected => 'Отклонено';
 }

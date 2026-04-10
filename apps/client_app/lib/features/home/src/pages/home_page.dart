@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:client_app/features/auth/src/bloc/auth_bloc.dart';
+import 'package:client_app/features/notifications/src/bloc/notifications_bloc.dart';
+import 'package:client_app/features/notifications/src/widgets/notifications_sheet.dart';
 import 'package:client_app/features/reports/src/bloc/reports_bloc.dart';
 import 'package:client_app/features/reports/src/models/report.dart';
 import 'package:client_app/features/reports/src/widgets/report_problem_dialog.dart';
@@ -83,6 +85,19 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         actions: [
+          BlocBuilder<NotificationsBloc, NotificationsState>(
+            builder: (context, state) {
+              final unread = state is NotificationsLoaded ? state.unreadCount : 0;
+              return IconButton(
+                onPressed: () => NotificationsSheet.show(context),
+                icon: Badge(
+                  isLabelVisible: unread > 0,
+                  label: Text('$unread'),
+                  child: const Icon(Icons.notifications_outlined),
+                ),
+              );
+            },
+          ),
           IconButton(
             onPressed: () => context.router.push(const SettingsRoute()),
             icon: const Icon(Icons.settings),

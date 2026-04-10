@@ -141,6 +141,16 @@
   "settingsLanguage": "Language",
   "@settingsLanguage": {},
   "settingsLogout": "Log out",
-  "@settingsLogout": {}
+  "@settingsLogout": {},
+  "notificationsTitle": "Notifications",
+  "@notificationsTitle": {},
+  "notificationsEmpty": "No notifications yet.",
+  "@notificationsEmpty": {},
+  "notificationsMarkAllRead": "Mark all as read",
+  "@notificationsMarkAllRead": {},
+  "notificationStatusChanged": "Status changed to",
+  "@notificationStatusChanged": {},
+  "notificationStatusRejected": "Rejected",
+  "@notificationStatusRejected": {}
 }
   

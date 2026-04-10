@@ -1,7 +1,10 @@
 import 'package:client_app/core/api/api_client.dart';
 import 'package:client_app/core/auth/token_repository.dart';
+import 'package:client_app/core/push/push_subscription_service.dart';
 import 'package:client_app/features/auth/src/auth_repository.dart';
 import 'package:client_app/features/auth/src/bloc/auth_bloc.dart';
+import 'package:client_app/features/notifications/src/bloc/notifications_bloc.dart';
+import 'package:client_app/features/notifications/src/notifications_repository.dart';
 import 'package:client_app/features/reports/src/bloc/reports_bloc.dart';
 import 'package:client_app/features/reports/src/reports_repository.dart';
 import 'package:client_app/features/settings/src/locale_cubit.dart';
@@ -44,12 +47,16 @@ void main() async {
   final authRepository = AuthRepository(apiClient: apiClient, tokenRepository: tokenRepository);
 
   final reportsRepository = ReportsRepository(apiClient: apiClient);
+  final notificationsRepository = NotificationsRepository(apiClient: apiClient);
+  final pushSubscriptionService = PushSubscriptionService(apiClient: apiClient);
 
   runApp(
     MyApp(
       appRouter: appRouter,
       authRepository: authRepository,
       reportsRepository: reportsRepository,
+      notificationsRepository: notificationsRepository,
+      pushSubscriptionService: pushSubscriptionService,
     ),
   );
 }
@@ -58,12 +65,16 @@ class MyApp extends StatelessWidget {
   final AppRouter appRouter;
   final AuthRepository authRepository;
   final ReportsRepository reportsRepository;
+  final NotificationsRepository notificationsRepository;
+  final PushSubscriptionService pushSubscriptionService;
 
   const MyApp({
     super.key,
     required this.appRouter,
     required this.authRepository,
     required this.reportsRepository,
+    required this.notificationsRepository,
+    required this.pushSubscriptionService,
   });
 
   @override
@@ -72,34 +83,45 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => AuthBloc(authRepository: authRepository)),
         BlocProvider(create: (_) => ReportsBloc(repository: reportsRepository)),
+        BlocProvider(create: (_) => NotificationsBloc(repository: notificationsRepository)),
         BlocProvider(create: (_) => ThemeCubit()),
         BlocProvider(create: (_) => LocaleCubit()),
       ],
-      child: BlocBuilder<ThemeCubit, ThemeMode>(
-        builder: (context, themeMode) {
-          return BlocBuilder<LocaleCubit, Locale?>(
-            builder: (context, locale) {
-              return ResponsiveApp(
-                child: MaterialApp.router(
-                  debugShowCheckedModeBanner: false,
-                  routerConfig: appRouter.config(),
-                  title: 'Problemka MTUCI',
-                  theme: AppTheme.light,
-                  darkTheme: AppTheme.dark,
-                  themeMode: themeMode,
-                  locale: locale,
-                  localizationsDelegates: const [
-                    S.delegate,
-                    GlobalMaterialLocalizations.delegate,
-                    GlobalWidgetsLocalizations.delegate,
-                    GlobalCupertinoLocalizations.delegate,
-                  ],
-                  supportedLocales: S.supportedLocales,
-                ),
-              );
-            },
-          );
+      child: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthSuccess) {
+            pushSubscriptionService.subscribe();
+          } else if (state is AuthInitial) {
+            // Fired after logout
+            pushSubscriptionService.unsubscribe();
+          }
         },
+        child: BlocBuilder<ThemeCubit, ThemeMode>(
+          builder: (context, themeMode) {
+            return BlocBuilder<LocaleCubit, Locale?>(
+              builder: (context, locale) {
+                return ResponsiveApp(
+                  child: MaterialApp.router(
+                    debugShowCheckedModeBanner: false,
+                    routerConfig: appRouter.config(),
+                    title: 'Problemka MTUCI',
+                    theme: AppTheme.light,
+                    darkTheme: AppTheme.dark,
+                    themeMode: themeMode,
+                    locale: locale,
+                    localizationsDelegates: const [
+                      S.delegate,
+                      GlobalMaterialLocalizations.delegate,
+                      GlobalWidgetsLocalizations.delegate,
+                      GlobalCupertinoLocalizations.delegate,
+                    ],
+                    supportedLocales: S.supportedLocales,
+                  ),
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }

@@ -462,6 +462,36 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Log out'**
   String get settingsLogout;
+
+  /// No description provided for @notificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsTitle;
+
+  /// No description provided for @notificationsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications yet.'**
+  String get notificationsEmpty;
+
+  /// No description provided for @notificationsMarkAllRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all as read'**
+  String get notificationsMarkAllRead;
+
+  /// No description provided for @notificationStatusChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Status changed to'**
+  String get notificationStatusChanged;
+
+  /// No description provided for @notificationStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get notificationStatusRejected;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

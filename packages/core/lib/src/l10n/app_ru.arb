@@ -60,6 +60,11 @@
   "settingsThemeLight": "Светлая",
   "settingsThemeDark": "Тёмная",
   "settingsLanguage": "Язык интерфейса",
-  "settingsLogout": "Выйти из аккаунта"
+  "settingsLogout": "Выйти из аккаунта",
+  "notificationsTitle": "Уведомления",
+  "notificationsEmpty": "Уведомлений пока нет.",
+  "notificationsMarkAllRead": "Прочитать все",
+  "notificationStatusChanged": "Статус изменён на",
+  "notificationStatusRejected": "Отклонено"
 }
   

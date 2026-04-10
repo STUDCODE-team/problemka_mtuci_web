@@ -201,4 +201,19 @@ class SEn extends S {
 
   @override
   String get settingsLogout => 'Log out';
+
+  @override
+  String get notificationsTitle => 'Notifications';
+
+  @override
+  String get notificationsEmpty => 'No notifications yet.';
+
+  @override
+  String get notificationsMarkAllRead => 'Mark all as read';
+
+  @override
+  String get notificationStatusChanged => 'Status changed to';
+
+  @override
+  String get notificationStatusRejected => 'Rejected';
 }
