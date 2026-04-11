@@ -53,6 +53,28 @@ class ReportsRepository {
     return Report.fromJson(response.data as Map<String, dynamic>);
   }
 
+  Future<Report> updateReport({
+    required String reportId,
+    String? title,
+    String? description,
+    String? location,
+    String? room,
+    String? category,
+  }) async {
+    final data = <String, dynamic>{};
+    if (title != null) data['title'] = title;
+    if (description != null) data['description'] = description;
+    if (location != null) data['location'] = location;
+    if (room != null) data['room'] = room;
+    if (category != null) data['category'] = category;
+
+    final response = await _apiClient.dio.patch(
+      '/api/reports/reports/$reportId',
+      data: data,
+    );
+    return Report.fromJson(response.data as Map<String, dynamic>);
+  }
+
   Future<List<ReportComment>> getComments(String reportId) async {
     final response = await _apiClient.dio.get('/api/reports/reports/$reportId/comments');
     final list = response.data as List<dynamic>;

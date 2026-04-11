@@ -1,5 +1,6 @@
-import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:client_app/features/reports/src/bloc/reports_bloc.dart';
+import 'package:client_app/router/auto_route.gr.dart';
 import 'package:client_app/features/reports/src/models/report.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +70,32 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
     final strings = S.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text(strings.reportDetailTitle)),
+      appBar: AppBar(
+        title: Text(strings.reportDetailTitle),
+        actions: [
+          BlocBuilder<ReportsBloc, ReportsState>(
+            builder: (context, state) {
+              if (state is ReportDetailLoaded &&
+                  state.report.status == ReportStatus.newReport) {
+                return IconButton(
+                  icon: const Icon(Icons.edit_outlined),
+                  tooltip: strings.reportEditTitle,
+                  onPressed: () async {
+                    final updated = await context.router
+                        .push(ReportEditRoute(report: state.report));
+                    if (updated == true && context.mounted) {
+                      context
+                          .read<ReportsBloc>()
+                          .add(LoadReportDetail(widget.reportId));
+                    }
+                  },
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ],
+      ),
       body: BlocBuilder<ReportsBloc, ReportsState>(
         builder: (context, state) {
           if (state is ReportsLoading) {

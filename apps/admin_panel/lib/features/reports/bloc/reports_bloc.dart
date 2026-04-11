@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:admin_panel/features/reports/models/report.dart';
 import 'package:admin_panel/features/reports/repositories/reports_repository.dart';
+import 'package:admin_panel/features/users/models/user_info.dart';
+import 'package:admin_panel/features/users/repositories/users_repository.dart';
 
 // --- Events ---
 
@@ -16,6 +18,23 @@ class ChangeReportStatus extends ReportsEvent {
   final String reportId;
   final ReportStatus status;
   ChangeReportStatus({required this.reportId, required this.status});
+}
+
+class LoadAdminReportDetail extends ReportsEvent {
+  final String reportId;
+  LoadAdminReportDetail(this.reportId);
+}
+
+class AddAdminComment extends ReportsEvent {
+  final String reportId;
+  final String text;
+  AddAdminComment({required this.reportId, required this.text});
+}
+
+class ForceChangeStatus extends ReportsEvent {
+  final String reportId;
+  final ReportStatus status;
+  ForceChangeStatus({required this.reportId, required this.status});
 }
 
 // --- States ---
@@ -42,17 +61,45 @@ class ReportStatusChanged extends ReportsState {
   ReportStatusChanged(this.report);
 }
 
+class AdminReportDetailLoaded extends ReportsState {
+  final ReportDetail report;
+  final List<ReportComment> comments;
+  final List<StatusHistoryEntry> history;
+  final UserInfo? reporter;
+
+  AdminReportDetailLoaded({
+    required this.report,
+    required this.comments,
+    required this.history,
+    this.reporter,
+  });
+}
+
+class AdminDetailLoading extends ReportsState {}
+
+class AdminDetailError extends ReportsState {
+  final String message;
+  AdminDetailError(this.message);
+}
+
 // --- BLoC ---
 
 class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
   final ReportsRepository _repository;
+  final UsersRepository? _usersRepository;
   ReportStatus? _currentFilter;
 
-  ReportsBloc({required ReportsRepository repository})
-      : _repository = repository,
+  ReportsBloc({
+    required ReportsRepository repository,
+    UsersRepository? usersRepository,
+  })  : _repository = repository,
+        _usersRepository = usersRepository,
         super(ReportsInitial()) {
     on<LoadReports>(_onLoad);
     on<ChangeReportStatus>(_onChangeStatus);
+    on<LoadAdminReportDetail>(_onLoadDetail);
+    on<AddAdminComment>(_onAddComment);
+    on<ForceChangeStatus>(_onForceChangeStatus);
   }
 
   Future<void> _onLoad(LoadReports event, Emitter<ReportsState> emit) async {
@@ -77,6 +124,66 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
     } on DioException catch (e) {
       emit(ReportsError(_extractError(e)));
       add(LoadReports(status: _currentFilter));
+    }
+  }
+
+  Future<void> _onLoadDetail(
+    LoadAdminReportDetail event,
+    Emitter<ReportsState> emit,
+  ) async {
+    emit(AdminDetailLoading());
+    try {
+      final results = await Future.wait([
+        _repository.getReportById(event.reportId),
+        _repository.getComments(event.reportId),
+        _repository.getStatusHistory(event.reportId),
+      ]);
+
+      final report = results[0] as ReportDetail;
+      final comments = results[1] as List<ReportComment>;
+      final history = results[2] as List<StatusHistoryEntry>;
+
+      UserInfo? reporter;
+      if (_usersRepository != null) {
+        try {
+          reporter = await _usersRepository.getUserById(report.reporterId);
+        } catch (_) {
+          // reporter info is optional — silently ignore
+        }
+      }
+
+      emit(AdminReportDetailLoaded(
+        report: report,
+        comments: comments,
+        history: history,
+        reporter: reporter,
+      ));
+    } on DioException catch (e) {
+      emit(AdminDetailError(_extractError(e)));
+    }
+  }
+
+  Future<void> _onAddComment(
+    AddAdminComment event,
+    Emitter<ReportsState> emit,
+  ) async {
+    try {
+      await _repository.addComment(event.reportId, event.text);
+      add(LoadAdminReportDetail(event.reportId));
+    } on DioException catch (e) {
+      emit(AdminDetailError(_extractError(e)));
+    }
+  }
+
+  Future<void> _onForceChangeStatus(
+    ForceChangeStatus event,
+    Emitter<ReportsState> emit,
+  ) async {
+    try {
+      await _repository.forceChangeStatus(event.reportId, event.status);
+      add(LoadAdminReportDetail(event.reportId));
+    } on DioException catch (e) {
+      emit(AdminDetailError(_extractError(e)));
     }
   }
 

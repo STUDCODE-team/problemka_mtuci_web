@@ -4,7 +4,7 @@ import 'package:client_app/features/notifications/src/bloc/notifications_bloc.da
 import 'package:client_app/features/notifications/src/widgets/notifications_sheet.dart';
 import 'package:client_app/features/reports/src/bloc/reports_bloc.dart';
 import 'package:client_app/features/reports/src/models/report.dart';
-import 'package:client_app/features/reports/src/widgets/report_problem_dialog.dart';
+// report_problem_dialog no longer used — replaced by CreateReportPage
 import 'package:client_app/router/auto_route.gr.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
@@ -59,12 +59,9 @@ class _HomePageState extends State<HomePage> {
     context.read<ReportsBloc>().add(LoadMyReports(status: status));
   }
 
-  Future<void> _openReportDialog() async {
-    final created = await showDialog<bool>(
-      context: context,
-      builder: (context) => const ReportProblemDialog(),
-    );
-    if (created == true && mounted) {
+  Future<void> _openCreateReport() async {
+    await context.router.push(const CreateReportRoute());
+    if (mounted) {
       context.read<ReportsBloc>().add(LoadMyReports(status: _selectedStatus));
     }
   }
@@ -203,7 +200,7 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(24, 12, 24, 16),
-          child: PMButton(text: strings.reportCreateButton, onPressed: _openReportDialog),
+          child: PMButton(text: strings.reportCreateButton, onPressed: _openCreateReport),
         ),
       ),
     );

@@ -216,4 +216,22 @@ class SEn extends S {
 
   @override
   String get notificationStatusRejected => 'Rejected';
+
+  @override
+  String get reportStatusRejected => 'Rejected';
+
+  @override
+  String get reportCreateTitle => 'New report';
+
+  @override
+  String get reportRoomHint => 'e.g. 301';
+
+  @override
+  String get reportEditTitle => 'Edit report';
+
+  @override
+  String get reportEditSuccess => 'Changes saved.';
+
+  @override
+  String get save => 'Save';
 }

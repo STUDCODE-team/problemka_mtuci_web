@@ -74,7 +74,12 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => AuthBloc(authRepository: authRepository)),
-        BlocProvider(create: (_) => ReportsBloc(repository: reportsRepository)),
+        BlocProvider(
+          create: (_) => ReportsBloc(
+            repository: reportsRepository,
+            usersRepository: usersRepository,
+          ),
+        ),
         BlocProvider(create: (_) => UsersBloc(repository: usersRepository)),
       ],
       child: BlocListener<AuthBloc, AuthState>(

@@ -36,15 +36,10 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   void _showReportDetails(ReportListItem item) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      builder: (_) => BlocProvider.value(
-        value: context.read<ReportsBloc>(),
-        child: _ReportDetailSheet(item: item),
-      ),
-    );
+    final bloc = context.read<ReportsBloc>();
+    context.router.push(AdminReportDetailRoute(reportId: item.id)).then((_) {
+      if (mounted) bloc.add(LoadReports(status: _activeFilter));
+    });
   }
 
   @override
@@ -189,111 +184,6 @@ class _ReportCard extends StatelessWidget {
           backgroundColor: _statusColor(report.status),
           padding: EdgeInsets.zero,
         ),
-      ),
-    );
-  }
-}
-
-class _ReportDetailSheet extends StatelessWidget {
-  final ReportListItem item;
-
-  const _ReportDetailSheet({required this.item});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocListener<ReportsBloc, ReportsState>(
-      listener: (context, state) {
-        if (state is ReportStatusChanged) {
-          Navigator.of(context).pop();
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Статус изменён на: ${state.report.status.label}'),
-            ),
-          );
-        } else if (state is ReportsError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
-        }
-      },
-      child: DraggableScrollableSheet(
-        expand: false,
-        initialChildSize: 0.5,
-        maxChildSize: 0.9,
-        builder: (_, controller) => Padding(
-          padding: const EdgeInsets.all(24),
-          child: ListView(
-            controller: controller,
-            children: [
-              Center(
-                child: Container(
-                  width: 40,
-                  height: 4,
-                  margin: const EdgeInsets.only(bottom: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-              ),
-              Text(item.title, style: context.texts.titleLarge),
-              const SizedBox(height: 12),
-              _InfoRow('Место', item.location),
-              _InfoRow('Категория', item.category),
-              _InfoRow('Приоритет', item.priority),
-              _InfoRow('Дата', _fmt(item.createdAt)),
-              _InfoRow('Статус', item.status.label),
-              const SizedBox(height: 24),
-              if (item.status.allowedTransitions.isNotEmpty) ...[
-                Text('Изменить статус', style: context.texts.titleMedium),
-                const SizedBox(height: 12),
-                Wrap(
-                  spacing: 8,
-                  children: item.status.allowedTransitions.map((next) {
-                    return ElevatedButton(
-                      onPressed: () {
-                        context.read<ReportsBloc>().add(
-                              ChangeReportStatus(
-                                reportId: item.id,
-                                status: next,
-                              ),
-                            );
-                      },
-                      child: Text(next.label),
-                    );
-                  }).toList(),
-                ),
-              ],
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _InfoRow extends StatelessWidget {
-  final String label;
-  final String value;
-
-  const _InfoRow(this.label, this.value);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 100,
-            child: Text(
-              label,
-              style: context.texts.bodySmall?.copyWith(color: Colors.grey),
-            ),
-          ),
-          Expanded(child: Text(value, style: context.texts.bodyMedium)),
-        ],
       ),
     );
   }

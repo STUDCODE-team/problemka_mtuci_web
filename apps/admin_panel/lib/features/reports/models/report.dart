@@ -90,6 +90,61 @@ class ReportListItem {
   }
 }
 
+class ReportComment {
+  final String id;
+  final String reportId;
+  final String authorId;
+  final String text;
+  final DateTime createdAt;
+
+  const ReportComment({
+    required this.id,
+    required this.reportId,
+    required this.authorId,
+    required this.text,
+    required this.createdAt,
+  });
+
+  factory ReportComment.fromJson(Map<String, dynamic> json) {
+    return ReportComment(
+      id: json['id'] as String,
+      reportId: json['report_id'] as String,
+      authorId: json['author_id'] as String,
+      text: json['text'] as String,
+      createdAt: DateTime.parse(json['created_at'] as String),
+    );
+  }
+}
+
+class StatusHistoryEntry {
+  final String id;
+  final String reportId;
+  final String oldStatus;
+  final String newStatus;
+  final String changedBy;
+  final DateTime changedAt;
+
+  const StatusHistoryEntry({
+    required this.id,
+    required this.reportId,
+    required this.oldStatus,
+    required this.newStatus,
+    required this.changedBy,
+    required this.changedAt,
+  });
+
+  factory StatusHistoryEntry.fromJson(Map<String, dynamic> json) {
+    return StatusHistoryEntry(
+      id: json['id'] as String,
+      reportId: json['report_id'] as String,
+      oldStatus: json['old_status'] as String,
+      newStatus: json['new_status'] as String,
+      changedBy: json['changed_by'] as String,
+      changedAt: DateTime.parse(json['changed_at'] as String),
+    );
+  }
+}
+
 class ReportDetail {
   final String id;
   final String title;

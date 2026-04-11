@@ -14,6 +14,11 @@ class UsersRepository {
         .toList();
   }
 
+  Future<UserInfo> getUserById(String userId) async {
+    final response = await _apiClient.dio.get('/api/auth/auth/users/$userId');
+    return UserInfo.fromJson(response.data as Map<String, dynamic>);
+  }
+
   Future<UserInfo> setRole(String userId, String role) async {
     final response = await _apiClient.dio.patch(
       '/api/auth/auth/users/$userId/role',

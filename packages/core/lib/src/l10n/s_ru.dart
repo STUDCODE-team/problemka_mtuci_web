@@ -216,4 +216,22 @@ class SRu extends S {
 
   @override
   String get notificationStatusRejected => 'Отклонено';
+
+  @override
+  String get reportStatusRejected => 'Отклонено';
+
+  @override
+  String get reportCreateTitle => 'Новая заявка';
+
+  @override
+  String get reportRoomHint => 'напр. 301';
+
+  @override
+  String get reportEditTitle => 'Редактировать заявку';
+
+  @override
+  String get reportEditSuccess => 'Изменения сохранены.';
+
+  @override
+  String get save => 'Сохранить';
 }

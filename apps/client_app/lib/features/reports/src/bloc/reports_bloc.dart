@@ -41,6 +41,24 @@ class AddComment extends ReportsEvent {
   AddComment({required this.reportId, required this.text});
 }
 
+class UpdateReport extends ReportsEvent {
+  final String reportId;
+  final String? title;
+  final String? description;
+  final String? location;
+  final String? room;
+  final String? category;
+
+  UpdateReport({
+    required this.reportId,
+    this.title,
+    this.description,
+    this.location,
+    this.room,
+    this.category,
+  });
+}
+
 // --- States ---
 
 abstract class ReportsState {}
@@ -78,6 +96,11 @@ class ReportCreated extends ReportsState {
   ReportCreated(this.report);
 }
 
+class ReportUpdated extends ReportsState {
+  final Report report;
+  ReportUpdated(this.report);
+}
+
 // --- BLoC ---
 
 class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
@@ -89,6 +112,7 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
     on<LoadMyReports>(_onLoadMyReports);
     on<LoadReportDetail>(_onLoadDetail);
     on<CreateReport>(_onCreateReport);
+    on<UpdateReport>(_onUpdateReport);
     on<AddComment>(_onAddComment);
   }
 
@@ -132,6 +156,22 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
         priority: event.priority,
       );
       emit(ReportCreated(report));
+    } on DioException catch (e) {
+      emit(ReportsError(_extractError(e)));
+    }
+  }
+
+  Future<void> _onUpdateReport(UpdateReport event, Emitter<ReportsState> emit) async {
+    try {
+      final report = await _repository.updateReport(
+        reportId: event.reportId,
+        title: event.title,
+        description: event.description,
+        location: event.location,
+        room: event.room,
+        category: event.category,
+      );
+      emit(ReportUpdated(report));
     } on DioException catch (e) {
       emit(ReportsError(_extractError(e)));
     }

@@ -492,6 +492,42 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Rejected'**
   String get notificationStatusRejected;
+
+  /// No description provided for @reportStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get reportStatusRejected;
+
+  /// No description provided for @reportCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New report'**
+  String get reportCreateTitle;
+
+  /// No description provided for @reportRoomHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 301'**
+  String get reportRoomHint;
+
+  /// No description provided for @reportEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit report'**
+  String get reportEditTitle;
+
+  /// No description provided for @reportEditSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes saved.'**
+  String get reportEditSuccess;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {
