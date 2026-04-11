@@ -111,7 +111,9 @@ class AdminReportDetailRoute
     name,
     builder: (data) {
       final args = data.argsAs<AdminReportDetailRouteArgs>(
-        orElse: () => const AdminReportDetailRouteArgs(reportId: ''),
+        orElse: () => AdminReportDetailRouteArgs(
+          reportId: data.params.getString('reportId'),
+        ),
       );
       return _i5.AdminReportDetailPage(key: args.key, reportId: args.reportId);
     },

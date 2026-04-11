@@ -10,12 +10,17 @@ import 'package:admin_panel/router/auto_route.dart';
 import 'package:admin_panel/router/auto_route.gr.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
 
   const apiBaseUrl = String.fromEnvironment(
     'API_BASE_URL',
@@ -29,7 +34,7 @@ void main() async {
   }
 
   late final AppRouter appRouter;
-  appRouter = AppRouter();
+  appRouter = AppRouter(tokenRepository: tokenRepository);
 
   final apiClient = ApiClient(
     baseUrl: apiBaseUrl,
@@ -44,12 +49,21 @@ void main() async {
     apiClient: apiClient,
     tokenRepository: tokenRepository,
   );
+
+  // Create bloc early, fire auto-login before runApp.
+  // AuthGuard on DashboardRoute lets the user in immediately if token is
+  // in memory — validation runs in background.
+  final authBloc = AuthBloc(authRepository: authRepository);
+  if (storedToken != null) {
+    authBloc.add(AuthTryAutoLogin());
+  }
+
   final reportsRepository = ReportsRepository(apiClient: apiClient);
   final usersRepository = UsersRepository(apiClient: apiClient);
 
   runApp(MyApp(
     appRouter: appRouter,
-    authRepository: authRepository,
+    authBloc: authBloc,
     reportsRepository: reportsRepository,
     usersRepository: usersRepository,
   ));
@@ -57,14 +71,14 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final AppRouter appRouter;
-  final AuthRepository authRepository;
+  final AuthBloc authBloc;
   final ReportsRepository reportsRepository;
   final UsersRepository usersRepository;
 
   const MyApp({
     super.key,
     required this.appRouter,
-    required this.authRepository,
+    required this.authBloc,
     required this.reportsRepository,
     required this.usersRepository,
   });
@@ -73,7 +87,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => AuthBloc(authRepository: authRepository)),
+        BlocProvider.value(value: authBloc),
         BlocProvider(
           create: (_) => ReportsBloc(
             repository: reportsRepository,

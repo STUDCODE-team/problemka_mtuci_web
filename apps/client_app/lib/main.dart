@@ -13,6 +13,7 @@ import 'package:client_app/router/auto_route.dart';
 import 'package:client_app/router/auto_route.gr.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ui_kit/ui_kit.dart';
@@ -20,20 +21,23 @@ import 'package:ui_kit/ui_kit.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
+
   const apiBaseUrl = String.fromEnvironment(
     'API_BASE_URL',
     defaultValue: 'https://devapi.problemka-mtuci.tech',
   );
 
   final tokenRepository = TokenRepository();
-  // Load stored access token on app start
   final storedToken = await tokenRepository.getAccessToken();
   if (storedToken != null) {
     tokenRepository.setAccessTokenSync(storedToken);
   }
 
   late final AppRouter appRouter;
-  appRouter = AppRouter();
+  appRouter = AppRouter(tokenRepository: tokenRepository);
 
   final apiClient = ApiClient(
     baseUrl: apiBaseUrl,
@@ -46,6 +50,14 @@ void main() async {
 
   final authRepository = AuthRepository(apiClient: apiClient, tokenRepository: tokenRepository);
 
+  // Create bloc early so we can fire auto-login before runApp.
+  // The AuthGuard on HomeRoute will immediately allow navigation if token
+  // is in memory — no flash of the login page. Validation runs in background.
+  final authBloc = AuthBloc(authRepository: authRepository);
+  if (storedToken != null) {
+    authBloc.add(AuthTryAutoLogin());
+  }
+
   final reportsRepository = ReportsRepository(apiClient: apiClient);
   final notificationsRepository = NotificationsRepository(apiClient: apiClient);
   final pushSubscriptionService = PushSubscriptionService(apiClient: apiClient);
@@ -53,7 +65,7 @@ void main() async {
   runApp(
     MyApp(
       appRouter: appRouter,
-      authRepository: authRepository,
+      authBloc: authBloc,
       reportsRepository: reportsRepository,
       notificationsRepository: notificationsRepository,
       pushSubscriptionService: pushSubscriptionService,
@@ -63,7 +75,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final AppRouter appRouter;
-  final AuthRepository authRepository;
+  final AuthBloc authBloc;
   final ReportsRepository reportsRepository;
   final NotificationsRepository notificationsRepository;
   final PushSubscriptionService pushSubscriptionService;
@@ -71,7 +83,7 @@ class MyApp extends StatelessWidget {
   const MyApp({
     super.key,
     required this.appRouter,
-    required this.authRepository,
+    required this.authBloc,
     required this.reportsRepository,
     required this.notificationsRepository,
     required this.pushSubscriptionService,
@@ -81,7 +93,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => AuthBloc(authRepository: authRepository)),
+        BlocProvider.value(value: authBloc),
         BlocProvider(create: (_) => ReportsBloc(repository: reportsRepository)),
         BlocProvider(create: (_) => NotificationsBloc(repository: notificationsRepository)),
         BlocProvider(create: (_) => ThemeCubit()),
@@ -92,8 +104,9 @@ class MyApp extends StatelessWidget {
           if (state is AuthSuccess) {
             pushSubscriptionService.subscribe();
           } else if (state is AuthInitial) {
-            // Fired after logout
+            // Fired after logout or failed auto-login
             pushSubscriptionService.unsubscribe();
+            appRouter.replaceAll([const AuthEnterEmailRoute()]);
           }
         },
         child: BlocBuilder<ThemeCubit, ThemeMode>(

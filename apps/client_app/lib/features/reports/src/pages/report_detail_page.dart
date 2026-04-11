@@ -82,7 +82,7 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
                   tooltip: strings.reportEditTitle,
                   onPressed: () async {
                     final updated = await context.router
-                        .push(ReportEditRoute(report: state.report));
+                        .push(ReportEditRoute(reportId: widget.reportId));
                     if (updated == true && context.mounted) {
                       context
                           .read<ReportsBloc>()

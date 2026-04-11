@@ -17,7 +17,6 @@ import 'package:client_app/features/auth/src/pages/auth_enter_email_page.dart'
 import 'package:client_app/features/auth/src/pages/auth_success_page.dart'
     as _i3;
 import 'package:client_app/features/home/src/pages/home_page.dart' as _i4;
-import 'package:client_app/features/reports/src/models/report.dart' as _i10;
 import 'package:client_app/features/reports/src/pages/create_report_page.dart'
     as _i7;
 import 'package:client_app/features/reports/src/pages/report_detail_page.dart'
@@ -185,7 +184,11 @@ class ReportDetailRoute extends _i9.PageRouteInfo<ReportDetailRouteArgs> {
   static _i9.PageInfo page = _i9.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<ReportDetailRouteArgs>();
+      final args = data.argsAs<ReportDetailRouteArgs>(
+        orElse: () => ReportDetailRouteArgs(
+          reportId: data.params.getString('reportId'),
+        ),
+      );
       return _i5.ReportDetailPage(key: args.key, reportId: args.reportId);
     },
   );
@@ -251,11 +254,11 @@ class CreateReportRoute extends _i9.PageRouteInfo<void> {
 class ReportEditRoute extends _i9.PageRouteInfo<ReportEditRouteArgs> {
   ReportEditRoute({
     _i11.Key? key,
-    required _i10.Report report,
+    required String reportId,
     List<_i9.PageRouteInfo>? children,
   }) : super(
          ReportEditRoute.name,
-         args: ReportEditRouteArgs(key: key, report: report),
+         args: ReportEditRouteArgs(key: key, reportId: reportId),
          initialChildren: children,
        );
 
@@ -264,31 +267,35 @@ class ReportEditRoute extends _i9.PageRouteInfo<ReportEditRouteArgs> {
   static _i9.PageInfo page = _i9.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<ReportEditRouteArgs>();
-      return _i8.ReportEditPage(key: args.key, report: args.report);
+      final args = data.argsAs<ReportEditRouteArgs>(
+        orElse: () => ReportEditRouteArgs(
+          reportId: data.params.getString('reportId'),
+        ),
+      );
+      return _i8.ReportEditPage(key: args.key, reportId: args.reportId);
     },
   );
 }
 
 class ReportEditRouteArgs {
-  const ReportEditRouteArgs({this.key, required this.report});
+  const ReportEditRouteArgs({this.key, required this.reportId});
 
   final _i11.Key? key;
 
-  final _i10.Report report;
+  final String reportId;
 
   @override
   String toString() {
-    return 'ReportEditRouteArgs{key: $key, report: $report}';
+    return 'ReportEditRouteArgs{key: $key, reportId: $reportId}';
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is! ReportEditRouteArgs) return false;
-    return key == other.key && report == other.report;
+    return key == other.key && reportId == other.reportId;
   }
 
   @override
-  int get hashCode => key.hashCode ^ report.hashCode;
+  int get hashCode => key.hashCode ^ reportId.hashCode;
 }

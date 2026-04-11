@@ -18,12 +18,6 @@ class _AuthEnterEmailPageState extends State<AuthEnterEmailPage> {
   final TextEditingController _emailController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    context.read<AuthBloc>().add(AuthTryAutoLogin());
-  }
-
-  @override
   void dispose() {
     _emailController.dispose();
     super.dispose();

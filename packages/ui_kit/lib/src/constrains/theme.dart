@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'colors.dart';
@@ -49,6 +50,11 @@ class AppTheme {
       surfaceTintColor: Colors.transparent,
       shadowColor: Colors.transparent,
       elevation: 0,
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
+      ),
       titleTextStyle: GoogleFonts.montserrat(
         fontSize: 18,
         fontWeight: FontWeight.w600,
@@ -195,6 +201,11 @@ class AppTheme {
       surfaceTintColor: Colors.transparent,
       shadowColor: Colors.transparent,
       elevation: 0,
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
+      ),
       titleTextStyle: GoogleFonts.montserrat(
         fontSize: 18,
         fontWeight: FontWeight.w600,
