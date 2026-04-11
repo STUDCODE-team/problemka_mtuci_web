@@ -22,7 +22,7 @@ class PushSubscriptionService {
     try {
       // 1. Get VAPID public key from backend
       final keyResponse =
-          await _apiClient.dio.get('/api/reports/notifications/vapid-public-key');
+          await _apiClient.dio.get('/api/notifications/push/vapid-public-key');
       final vapidPublicKey = keyResponse.data['public_key'] as String?;
       if (vapidPublicKey == null || vapidPublicKey.isEmpty) return;
 
@@ -34,7 +34,7 @@ class PushSubscriptionService {
 
       // 3. Send subscription to backend
       await _apiClient.dio.post(
-        '/api/reports/notifications/push-subscribe',
+        '/api/notifications/push/subscribe',
         data: {
           'endpoint': subJson['endpoint'],
           'p256dh': subJson['p256dh'],
@@ -56,7 +56,7 @@ class PushSubscriptionService {
       final subJson = jsonDecode(jsResult.toDart) as Map<String, dynamic>;
 
       await _apiClient.dio.post(
-        '/api/reports/notifications/push-unsubscribe',
+        '/api/notifications/push/unsubscribe',
         data: {
           'endpoint': subJson['endpoint'],
           'p256dh': subJson['p256dh'],
