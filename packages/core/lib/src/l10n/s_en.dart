@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 's.dart';
 
 // ignore_for_file: type=lint
@@ -26,7 +27,7 @@ class SEn extends S {
   String get authEmailLabel => 'Email';
 
   @override
-  String get authEmailHint => 'sample@mtuci.edu';
+  String get authEmailHint => 'sample@edu.mtuci.ru';
 
   @override
   String get authSendCode => 'Send code';
@@ -38,8 +39,7 @@ class SEn extends S {
   String get authUnknownEmail => 'This email is not in the mock database.';
 
   @override
-  String get authDemoEmails =>
-      'Demo emails: student@mtuci.edu, teacher@mtuci.edu';
+  String get authDemoEmails => 'Demo emails: student@mtuci.edu, teacher@mtuci.edu';
 
   @override
   String get authCodeTitle => 'Enter code';
@@ -152,7 +152,7 @@ class SEn extends S {
   String get reportDialogLocation => 'Location';
 
   @override
-  String get reportDialogLocationHint => 'Building, floor, room';
+  String get reportDialogLocationHint => 'Building, floor';
 
   @override
   String get reportDialogCategory => 'Category';

@@ -15,7 +15,7 @@ class AuthSuccessPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final strings = S.of(context);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(automaticallyImplyLeading: false),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(32),

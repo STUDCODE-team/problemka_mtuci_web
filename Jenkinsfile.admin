@@ -45,11 +45,19 @@ pipeline {
 
     stage('Build admin app') {
       steps {
-        dir('apps/admin_panel') {
-          sh '''
-            set -eux
-            "${FLUTTER_BIN}" build web --release --no-pub --no-tree-shake-icons --no-wasm-dry-run --output="${WORKSPACE}/build/admin_panel"
-          '''
+        withCredentials([file(credentialsId: 'flutter-env-admin', variable: 'FLUTTER_ENV_FILE')]) {
+          dir('apps/admin_panel') {
+            sh '''
+              set -eux
+              "${FLUTTER_BIN}" build web \
+                --release \
+                --no-pub \
+                --no-tree-shake-icons \
+                --no-wasm-dry-run \
+                --dart-define-from-file="${FLUTTER_ENV_FILE}" \
+                --output="${WORKSPACE}/build/admin_panel"
+            '''
+          }
         }
       }
     }

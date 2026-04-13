@@ -62,8 +62,7 @@ import 's_ru.dart';
 /// be consistent with the languages listed in the S.supportedLocales
 /// property.
 abstract class S {
-  S(String locale)
-    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  S(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -92,10 +91,7 @@ abstract class S {
       ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('en'),
-    Locale('ru'),
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('ru')];
 
   /// No description provided for @hello.
   ///
@@ -130,7 +126,7 @@ abstract class S {
   /// No description provided for @authEmailHint.
   ///
   /// In en, this message translates to:
-  /// **'sample@mtuci.edu'**
+  /// **'sample@edu.mtuci.ru'**
   String get authEmailHint;
 
   /// No description provided for @authSendCode.
@@ -539,8 +535,7 @@ class _SDelegate extends LocalizationsDelegate<S> {
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'ru'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'ru'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_SDelegate old) => false;

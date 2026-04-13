@@ -60,8 +60,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _openCreateReport() async {
-    await context.router.push(const CreateReportRoute());
-    if (mounted) {
+    final created = await context.router.push<bool>(const CreateReportRoute());
+    if (mounted && created == true) {
       context.read<ReportsBloc>().add(LoadMyReports(status: _selectedStatus));
     }
   }
@@ -117,21 +117,25 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     ChoiceChip(
                       label: Text(strings.reportFilterAll),
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 4),
                       selected: _selectedStatus == null,
                       onSelected: (_) => _onFilterChanged(null),
                     ),
                     ChoiceChip(
                       label: Text(strings.reportStatusNew),
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 4),
                       selected: _selectedStatus == ReportStatus.newReport,
                       onSelected: (_) => _onFilterChanged(ReportStatus.newReport),
                     ),
                     ChoiceChip(
                       label: Text(strings.reportStatusInProgress),
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 4),
                       selected: _selectedStatus == ReportStatus.inProgress,
                       onSelected: (_) => _onFilterChanged(ReportStatus.inProgress),
                     ),
                     ChoiceChip(
                       label: Text(strings.reportStatusResolved),
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 4),
                       selected: _selectedStatus == ReportStatus.resolved,
                       onSelected: (_) => _onFilterChanged(ReportStatus.resolved),
                     ),
@@ -140,6 +144,10 @@ class _HomePageState extends State<HomePage> {
               ),
               Expanded(
                 child: BlocBuilder<ReportsBloc, ReportsState>(
+                  buildWhen: (_, current) =>
+                      current is ReportsLoading ||
+                      current is ReportsLoaded ||
+                      current is ReportsError,
                   builder: (context, state) {
                     if (state is ReportsLoading) {
                       return const Center(child: CircularProgressIndicator());
@@ -199,7 +207,7 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(24, 12, 24, 16),
+          padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
           child: PMButton(text: strings.reportCreateButton, onPressed: _openCreateReport),
         ),
       ),

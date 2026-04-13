@@ -16,9 +16,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 void main() async {
+  const glitchtipDsn = String.fromEnvironment('GLITCHTIP_DSN');
+
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = glitchtipDsn;
+      options.tracesSampleRate = 0.01;
+      options.enableAutoSessionTracking = false;
+      options.environment = const String.fromEnvironment(
+        'APP_ENV',
+        defaultValue: 'development',
+      );
+    },
+    appRunner: _bootstrap,
+  );
+}
+
+Future<void> _bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(

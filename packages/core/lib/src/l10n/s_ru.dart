@@ -1,5 +1,6 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
+
 import 's.dart';
 
 // ignore_for_file: type=lint
@@ -26,7 +27,7 @@ class SRu extends S {
   String get authEmailLabel => 'Email';
 
   @override
-  String get authEmailHint => 'sample@mtuci.edu';
+  String get authEmailHint => 'sample@edu.mtuci.ru';
 
   @override
   String get authSendCode => 'Отправить код';
@@ -38,8 +39,7 @@ class SRu extends S {
   String get authUnknownEmail => 'Этого email нет в моковой базе.';
 
   @override
-  String get authDemoEmails =>
-      'Демо email: student@mtuci.edu, teacher@mtuci.edu';
+  String get authDemoEmails => 'Демо email: student@mtuci.edu, teacher@mtuci.edu';
 
   @override
   String get authCodeTitle => 'Введите код';
@@ -152,7 +152,7 @@ class SRu extends S {
   String get reportDialogLocation => 'Расположение';
 
   @override
-  String get reportDialogLocationHint => 'Корпус, этаж, кабинет';
+  String get reportDialogLocationHint => 'Корпус, этаж';
 
   @override
   String get reportDialogCategory => 'Категория';

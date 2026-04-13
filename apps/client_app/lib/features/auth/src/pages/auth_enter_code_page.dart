@@ -65,7 +65,7 @@ class _AuthEnterCodePageState extends State<AuthEnterCodePage> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(automaticallyImplyLeading: false),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(32),

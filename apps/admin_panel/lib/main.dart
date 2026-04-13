@@ -13,14 +13,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:ui_kit/ui_kit.dart';
 
 void main() async {
+  const glitchtipDsn = String.fromEnvironment('GLITCHTIP_DSN');
+
+  await SentryFlutter.init((options) {
+    options.dsn = glitchtipDsn;
+    options.tracesSampleRate = 0.01;
+    options.enableAutoSessionTracking = false;
+    options.environment = const String.fromEnvironment('APP_ENV', defaultValue: 'development');
+  }, appRunner: _bootstrap);
+}
+
+Future<void> _bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-  ));
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+  );
 
   const apiBaseUrl = String.fromEnvironment(
     'API_BASE_URL',
@@ -45,10 +57,7 @@ void main() async {
     },
   );
 
-  final authRepository = AuthRepository(
-    apiClient: apiClient,
-    tokenRepository: tokenRepository,
-  );
+  final authRepository = AuthRepository(apiClient: apiClient, tokenRepository: tokenRepository);
 
   // Create bloc early, fire auto-login before runApp.
   // AuthGuard on DashboardRoute lets the user in immediately if token is
@@ -61,12 +70,14 @@ void main() async {
   final reportsRepository = ReportsRepository(apiClient: apiClient);
   final usersRepository = UsersRepository(apiClient: apiClient);
 
-  runApp(MyApp(
-    appRouter: appRouter,
-    authBloc: authBloc,
-    reportsRepository: reportsRepository,
-    usersRepository: usersRepository,
-  ));
+  runApp(
+    MyApp(
+      appRouter: appRouter,
+      authBloc: authBloc,
+      reportsRepository: reportsRepository,
+      usersRepository: usersRepository,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -89,10 +100,8 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider.value(value: authBloc),
         BlocProvider(
-          create: (_) => ReportsBloc(
-            repository: reportsRepository,
-            usersRepository: usersRepository,
-          ),
+          create: (_) =>
+              ReportsBloc(repository: reportsRepository, usersRepository: usersRepository),
         ),
         BlocProvider(create: (_) => UsersBloc(repository: usersRepository)),
       ],

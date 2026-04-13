@@ -27,6 +27,7 @@ dependencies:
   shared_preferences: ^2.3.0
   talker: ^5.1.16
   talker_dio_logger: ^5.1.16
+  sentry_flutter: ^8.13.0
 
 dev_dependencies:
   flutter_test:

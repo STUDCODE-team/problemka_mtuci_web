@@ -27,9 +27,11 @@ pipeline {
       steps {
         sh '''
           set -eux
+          "${FLUTTER_BIN}" config --no-analytics
           "${FLUTTER_BIN}" --version
           "${DART_BIN}" --version
           "${FLUTTER_BIN}" config --enable-web
+          "${FLUTTER_BIN}" precache --web
         '''
       }
     }
@@ -44,17 +46,23 @@ pipeline {
     }
 
     stage('Build client app') {
+      options {
+        timeout(time: 20, unit: 'MINUTES')
+      }
       steps {
-        dir('apps/client_app') {
-          sh '''
-            set -eux
-            "${FLUTTER_BIN}" build web \
-              --release \
-              --no-pub \
-              --no-tree-shake-icons \
-              --dart-define=API_BASE_URL=https://devapi.problemka-mtuci.tech \
-              --output="${WORKSPACE}/build/client_app"
-          '''
+        withCredentials([file(credentialsId: 'flutter-env-client', variable: 'FLUTTER_ENV_FILE')]) {
+          dir('apps/client_app') {
+            sh '''
+              set -eux
+              "${FLUTTER_BIN}" build web \
+                --release \
+                --no-pub \
+                --no-tree-shake-icons \
+                --no-wasm \
+                --dart-define-from-file="${FLUTTER_ENV_FILE}" \
+                --output="${WORKSPACE}/build/client_app"
+            '''
+          }
         }
       }
     }

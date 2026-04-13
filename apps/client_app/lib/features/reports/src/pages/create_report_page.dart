@@ -61,7 +61,7 @@ class _CreateReportPageState extends State<CreateReportPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(strings.reportDialogSuccess)),
           );
-          context.router.maybePop();
+          context.router.maybePop(true);
         } else if (state is ReportsError) {
           setState(() => _isSubmitting = false);
           ScaffoldMessenger.of(context).showSnackBar(
@@ -96,17 +96,45 @@ class _CreateReportPageState extends State<CreateReportPage> {
                       hint: strings.reportRoomHint,
                       controller: _roomController,
                     ),
-                    DropdownButtonFormField<ReportCategory>(
-                      initialValue: _selectedCategory,
-                      decoration: InputDecoration(
-                        labelText: strings.reportDialogCategory,
-                        border: const OutlineInputBorder(),
-                      ),
-                      hint: Text(strings.reportDialogCategoryHint),
-                      items: ReportCategory.values.map((c) {
-                        return DropdownMenuItem(value: c, child: Text(c.label));
-                      }).toList(),
-                      onChanged: (val) => setState(() => _selectedCategory = val),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 8,
+                      children: [
+                        Text(
+                          strings.reportDialogCategory,
+                          style: context.texts.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                        ),
+                        DropdownButtonFormField<ReportCategory>(
+                          initialValue: _selectedCategory,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: context.colors.secondaryContainer,
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14),
+                              borderSide: BorderSide.none,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14),
+                              borderSide: BorderSide.none,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14),
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
+                          hint: Text(
+                            strings.reportDialogCategoryHint,
+                            style: context.texts.bodyLarge?.copyWith(
+                              color: context.colors.onSurface.withValues(alpha: 0.5),
+                            ),
+                          ),
+                          items: ReportCategory.values.map((c) {
+                            return DropdownMenuItem(value: c, child: Text(c.label));
+                          }).toList(),
+                          onChanged: (val) => setState(() => _selectedCategory = val),
+                        ),
+                      ],
                     ),
                     _DescriptionField(
                       label: strings.reportDialogDescription,

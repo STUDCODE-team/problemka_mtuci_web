@@ -47,7 +47,7 @@ class _AuthEnterEmailPageState extends State<AuthEnterEmailPage> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthCodeSent) {
-          context.router.push(AuthEnterCodeRoute(email: state.email));
+          context.router.replace(AuthEnterCodeRoute(email: state.email));
         } else if (state is AuthSuccess) {
           context.router.replaceAll([HomeRoute()]);
         } else if (state is AuthError) {
@@ -55,7 +55,7 @@ class _AuthEnterEmailPageState extends State<AuthEnterEmailPage> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(automaticallyImplyLeading: false),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(32),
@@ -81,13 +81,6 @@ class _AuthEnterEmailPageState extends State<AuthEnterEmailPage> {
                       label: strings.authEmailLabel,
                       hint: strings.authEmailHint,
                       controller: _emailController,
-                    ),
-                    Text(
-                      strings.authDemoEmails,
-                      style: context.texts.bodySmall?.copyWith(
-                        color: context.colors.onSurface.withValues(alpha: 0.65),
-                      ),
-                      textAlign: TextAlign.center,
                     ),
                     BlocBuilder<AuthBloc, AuthState>(
                       builder: (context, state) {
