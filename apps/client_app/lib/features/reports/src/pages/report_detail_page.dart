@@ -41,18 +41,18 @@ class _ReportDetailPageState extends State<ReportDetailPage> {
       case ReportStatus.resolved:
         return strings.reportStatusResolved;
       case ReportStatus.rejected:
-        return strings.reportStatusResolved;
+        return strings.reportStatusRejected;
     }
   }
 
   Color _statusColor(BuildContext context, ReportStatus status) {
     switch (status) {
       case ReportStatus.newReport:
-        return context.colors.tertiary;
+        return context.colors.onSurfaceVariant;
       case ReportStatus.inProgress:
         return context.colors.primary;
       case ReportStatus.resolved:
-        return context.colors.secondary;
+        return context.colors.tertiary;
       case ReportStatus.rejected:
         return context.colors.error;
     }

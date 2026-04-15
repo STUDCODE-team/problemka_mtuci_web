@@ -37,6 +37,11 @@ class ForceChangeStatus extends ReportsEvent {
   ForceChangeStatus({required this.reportId, required this.status});
 }
 
+class DeleteReport extends ReportsEvent {
+  final String reportId;
+  DeleteReport(this.reportId);
+}
+
 // --- States ---
 
 abstract class ReportsState {}
@@ -82,6 +87,13 @@ class AdminDetailError extends ReportsState {
   AdminDetailError(this.message);
 }
 
+class ReportDeleted extends ReportsState {}
+
+class ReportDeleteError extends ReportsState {
+  final String message;
+  ReportDeleteError(this.message);
+}
+
 // --- BLoC ---
 
 class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
@@ -100,6 +112,7 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
     on<LoadAdminReportDetail>(_onLoadDetail);
     on<AddAdminComment>(_onAddComment);
     on<ForceChangeStatus>(_onForceChangeStatus);
+    on<DeleteReport>(_onDeleteReport);
   }
 
   Future<void> _onLoad(LoadReports event, Emitter<ReportsState> emit) async {
@@ -184,6 +197,18 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
       add(LoadAdminReportDetail(event.reportId));
     } on DioException catch (e) {
       emit(AdminDetailError(_extractError(e)));
+    }
+  }
+
+  Future<void> _onDeleteReport(
+    DeleteReport event,
+    Emitter<ReportsState> emit,
+  ) async {
+    try {
+      await _repository.deleteReport(event.reportId);
+      emit(ReportDeleted());
+    } on DioException catch (e) {
+      emit(ReportDeleteError(_extractError(e)));
     }
   }
 

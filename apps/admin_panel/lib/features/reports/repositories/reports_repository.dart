@@ -64,4 +64,8 @@ class ReportsRepository {
     final list = response.data as List<dynamic>;
     return list.map((json) => StatusHistoryEntry.fromJson(json as Map<String, dynamic>)).toList();
   }
+
+  Future<void> deleteReport(String id) async {
+    await _apiClient.dio.delete('/api/reports/reports/$id');
+  }
 }

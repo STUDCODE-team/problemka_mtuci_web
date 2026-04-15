@@ -21,7 +21,7 @@ class SRu extends S {
   String get authTitle => 'Вход';
 
   @override
-  String get authSubtitle => 'Система отчетов университета МТУСИ';
+  String get authSubtitle => 'Система заявок университета МТУСИ';
 
   @override
   String get authEmailLabel => 'Email';
@@ -92,16 +92,16 @@ class SRu extends S {
   }
 
   @override
-  String get reportAppTitle => 'University Reporting App';
+  String get reportAppTitle => 'Problemka MTUCI';
 
   @override
-  String get reportListTitle => 'Отчеты';
+  String get reportListTitle => 'Обращения';
 
   @override
   String get reportFilterAll => 'Все';
 
   @override
-  String get reportListEmpty => 'Отчетов пока нет.';
+  String get reportListEmpty => 'Заявок пока нет.';
 
   @override
   String get reportCreateButton => 'Сообщить о проблеме';
@@ -116,7 +116,7 @@ class SRu extends S {
   String get reportStatusResolved => 'Решено';
 
   @override
-  String get reportDetailTitle => 'Детали отчета';
+  String get reportDetailTitle => 'Детали обращения';
 
   @override
   String get reportDetailLocation => 'Место';
@@ -137,7 +137,7 @@ class SRu extends S {
   String get reportDetailDate => 'Дата';
 
   @override
-  String get reportNotFound => 'Отчет не найден.';
+  String get reportNotFound => 'Обращение не найдено.';
 
   @override
   String get reportDialogTitle => 'Сообщить о проблеме';
@@ -221,13 +221,13 @@ class SRu extends S {
   String get reportStatusRejected => 'Отклонено';
 
   @override
-  String get reportCreateTitle => 'Новая заявка';
+  String get reportCreateTitle => 'Новое обращение';
 
   @override
   String get reportRoomHint => 'напр. 301';
 
   @override
-  String get reportEditTitle => 'Редактировать заявку';
+  String get reportEditTitle => 'Редактировать обращение';
 
   @override
   String get reportEditSuccess => 'Изменения сохранены.';

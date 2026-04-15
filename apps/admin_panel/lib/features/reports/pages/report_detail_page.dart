@@ -45,13 +45,53 @@ class _AdminReportDetailPageState extends State<AdminReportDetailPage> {
     _commentController.clear();
   }
 
+  Future<void> _confirmDelete(BuildContext context) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Удалить обращение?'),
+        content: const Text('Это действие необратимо. Обращение будет удалено навсегда.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Отмена'),
+          ),
+          FilledButton(
+            style: FilledButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('Удалить'),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true && context.mounted) {
+      context.read<ReportsBloc>().add(DeleteReport(widget.reportId));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Детали заявки')),
+      appBar: AppBar(
+        title: const Text('Детали обращения'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete_outline),
+            tooltip: 'Удалить обращение',
+            color: Colors.red,
+            onPressed: () => _confirmDelete(context),
+          ),
+        ],
+      ),
       body: BlocConsumer<ReportsBloc, ReportsState>(
         listener: (context, state) {
-          if (state is AdminDetailError) {
+          if (state is ReportDeleted) {
+            context.router.maybePop();
+          } else if (state is ReportDeleteError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.message)),
+            );
+          } else if (state is AdminDetailError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.message)),
             );

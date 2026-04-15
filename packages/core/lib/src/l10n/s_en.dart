@@ -92,7 +92,7 @@ class SEn extends S {
   }
 
   @override
-  String get reportAppTitle => 'University Reporting App';
+  String get reportAppTitle => 'Problemka MTUCI';
 
   @override
   String get reportListTitle => 'Reports';
