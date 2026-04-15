@@ -47,7 +47,7 @@ pipeline {
 
     stage('Build client app') {
       options {
-        timeout(time: 20, unit: 'MINUTES')
+        timeout(time: 40, unit: 'MINUTES')
       }
       steps {
         withCredentials([file(credentialsId: 'flutter-env-client', variable: 'FLUTTER_ENV_FILE')]) {
@@ -58,7 +58,6 @@ pipeline {
                 --release \
                 --no-pub \
                 --no-tree-shake-icons \
-                --no-wasm \
                 --dart-define-from-file="${FLUTTER_ENV_FILE}" \
                 --output="${WORKSPACE}/build/client_app"
             '''
