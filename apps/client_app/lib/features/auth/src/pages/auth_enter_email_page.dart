@@ -75,7 +75,7 @@ class _AuthEnterEmailPageState extends State<AuthEnterEmailPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 16),
-                      child: Text(strings.authSubtitle, style: context.texts.bodyLarge),
+                      child: Text(strings.authSubtitle, style: context.texts.bodyLarge, textAlign: TextAlign.center),
                     ),
                     PMInput(
                       label: strings.authEmailLabel,

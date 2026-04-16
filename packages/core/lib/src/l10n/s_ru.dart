@@ -21,7 +21,7 @@ class SRu extends S {
   String get authTitle => 'Вход';
 
   @override
-  String get authSubtitle => 'Система заявок университета МТУСИ';
+  String get authSubtitle => 'Система обращений университета МТУСИ';
 
   @override
   String get authEmailLabel => 'Email';
