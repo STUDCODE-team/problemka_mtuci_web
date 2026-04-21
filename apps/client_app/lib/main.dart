@@ -49,9 +49,9 @@ Future<void> _bootstrap() async {
   );
 
   final tokenRepository = TokenRepository();
-  final storedToken = await tokenRepository.getAccessToken();
-  if (storedToken != null) {
-    tokenRepository.setAccessTokenSync(storedToken);
+  final hasSession = await tokenRepository.hasPersistedSession();
+  if (hasSession) {
+    tokenRepository.setLoggedIn();
   }
 
   late final AppRouter appRouter;
@@ -69,10 +69,10 @@ Future<void> _bootstrap() async {
   final authRepository = AuthRepository(apiClient: apiClient, tokenRepository: tokenRepository);
 
   // Create bloc early so we can fire auto-login before runApp.
-  // The AuthGuard on HomeRoute will immediately allow navigation if token
-  // is in memory — no flash of the login page. Validation runs in background.
+  // If hasSession=true, AuthGuard lets the user through immediately while
+  // tryAutoLogin validates the cookie in the background.
   final authBloc = AuthBloc(authRepository: authRepository);
-  if (storedToken != null) {
+  if (hasSession) {
     authBloc.add(AuthTryAutoLogin());
   }
 

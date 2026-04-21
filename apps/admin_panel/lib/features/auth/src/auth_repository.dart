@@ -3,15 +3,8 @@ import 'package:admin_panel/core/api/api_client.dart';
 import 'package:admin_panel/core/auth/token_repository.dart';
 
 class AuthResult {
-  final String accessToken;
-  final String refreshToken;
   final String role;
-
-  const AuthResult({
-    required this.accessToken,
-    required this.refreshToken,
-    required this.role,
-  });
+  const AuthResult({required this.role});
 }
 
 class UserInfo {
@@ -64,23 +57,19 @@ class AuthRepository {
     });
 
     final data = response.data as Map<String, dynamic>;
-    final result = AuthResult(
-      accessToken: data['access_token'] as String,
-      refreshToken: data['refresh_token'] as String,
-      role: data['role'] as String,
-    );
+    final role = data['role'] as String;
 
-    if (result.role != 'admin' && result.role != 'manager') {
+    if (role != 'admin' && role != 'manager') {
       throw DioException(
         requestOptions: RequestOptions(),
         message: 'Access denied: admin or manager role required',
       );
     }
 
-    await _tokenRepository.setAccessToken(result.accessToken);
-    await _tokenRepository.saveRefreshToken(result.refreshToken);
-
-    return result;
+    // Tokens are now in HttpOnly cookies set by the server
+    _tokenRepository.setLoggedIn();
+    await _tokenRepository.persistSession();
+    return AuthResult(role: role);
   }
 
   Future<UserInfo> getMe() async {
@@ -90,12 +79,7 @@ class AuthRepository {
 
   Future<void> logout() async {
     try {
-      final refreshToken = await _tokenRepository.getRefreshToken();
-      if (refreshToken != null) {
-        await _apiClient.dio.post('/api/auth/auth/logout', data: {
-          'refresh_token': refreshToken,
-        });
-      }
+      await _apiClient.dio.post('/api/auth/auth/logout');
     } on DioException {
       // ignore
     } finally {
@@ -104,20 +88,14 @@ class AuthRepository {
   }
 
   Future<bool> tryAutoLogin() async {
-    final refreshToken = await _tokenRepository.getRefreshToken();
-    if (refreshToken == null) return false;
-
     try {
       final refreshDio = Dio(BaseOptions(
         baseUrl: _apiClient.dio.options.baseUrl,
         headers: {'Content-Type': 'application/json'},
+        extra: {'withCredentials': true},
       ));
-      final response = await refreshDio.post('/api/auth/auth/refresh', data: {
-        'refresh_token': refreshToken,
-      });
-      final data = response.data as Map<String, dynamic>;
-      await _tokenRepository.setAccessToken(data['access_token'] as String);
-      await _tokenRepository.saveRefreshToken(data['refresh_token'] as String);
+      await refreshDio.post('/api/auth/auth/refresh');
+      _tokenRepository.setLoggedIn();
       return true;
     } on DioException {
       await _tokenRepository.clearAll();

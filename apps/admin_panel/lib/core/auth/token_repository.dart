@@ -1,56 +1,29 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TokenRepository {
-  static const _accessTokenKey = 'admin_access_token';
-  static const _refreshTokenKey = 'admin_refresh_token';
+  static const _hasSessionKey = 'admin_has_session';
 
-  String? _accessToken;
+  bool _isLoggedIn = false;
 
-  String? get accessToken => _accessToken;
+  bool get isLoggedIn => _isLoggedIn;
 
-  Future<void> setAccessToken(String token) async {
-    _accessToken = token;
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_accessTokenKey, token);
+  void setLoggedIn() {
+    _isLoggedIn = true;
   }
 
-  void setAccessTokenSync(String token) {
-    _accessToken = token;
+  Future<void> persistSession() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_hasSessionKey, true);
   }
 
-  Future<void> clearAccessToken() async {
-    _accessToken = null;
+  Future<bool> hasPersistedSession() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_accessTokenKey);
-  }
-
-  Future<String?> getAccessToken() async {
-    if (_accessToken != null) {
-      return _accessToken;
-    }
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_accessTokenKey);
-  }
-
-  Future<void> saveRefreshToken(String token) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_refreshTokenKey, token);
-  }
-
-  Future<String?> getRefreshToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_refreshTokenKey);
-  }
-
-  Future<void> clearRefreshToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_refreshTokenKey);
+    return prefs.getBool(_hasSessionKey) ?? false;
   }
 
   Future<void> clearAll() async {
-    await clearAccessToken();
-    await clearRefreshToken();
+    _isLoggedIn = false;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_hasSessionKey);
   }
-
-  bool get isLoggedIn => _accessToken != null;
 }
