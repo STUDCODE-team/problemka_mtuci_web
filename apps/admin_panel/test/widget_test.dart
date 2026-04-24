@@ -1,14 +1,19 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter_test/flutter_test.dart';
+import 'package:admin_panel/features/reports/models/report.dart';
 
+// Smoke-тест: проверяет, что ключевые классы доступны и работают
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    expect(true, isTrue);
+  test('ReportStatus (admin) имеет корректные значения', () {
+    expect(ReportStatus.values.length, 4);
+  });
+
+  test('Конечные статусы не имеют допустимых переходов', () {
+    expect(ReportStatus.resolved.allowedTransitions, isEmpty);
+    expect(ReportStatus.rejected.allowedTransitions, isEmpty);
+  });
+
+  test('Начальные статусы имеют допустимые переходы', () {
+    expect(ReportStatus.newReport.allowedTransitions, isNotEmpty);
+    expect(ReportStatus.inProgress.allowedTransitions, isNotEmpty);
   });
 }
