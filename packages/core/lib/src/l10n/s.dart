@@ -62,7 +62,8 @@ import 's_ru.dart';
 /// be consistent with the languages listed in the S.supportedLocales
 /// property.
 abstract class S {
-  S(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  S(String locale)
+    : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -91,7 +92,10 @@ abstract class S {
       ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[Locale('en'), Locale('ru')];
+  static const List<Locale> supportedLocales = <Locale>[
+    Locale('en'),
+    Locale('ru'),
+  ];
 
   /// No description provided for @hello.
   ///
@@ -240,7 +244,7 @@ abstract class S {
   /// No description provided for @reportAppTitle.
   ///
   /// In en, this message translates to:
-  /// **'University Reporting App'**
+  /// **'Problemka MTUCI'**
   String get reportAppTitle;
 
   /// No description provided for @reportListTitle.
@@ -284,6 +288,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Resolved'**
   String get reportStatusResolved;
+
+  /// No description provided for @reportStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get reportStatusRejected;
 
   /// No description provided for @reportDetailTitle.
   ///
@@ -333,6 +343,36 @@ abstract class S {
   /// **'Report not found.'**
   String get reportNotFound;
 
+  /// No description provided for @reportCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New report'**
+  String get reportCreateTitle;
+
+  /// No description provided for @reportRoomHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 301'**
+  String get reportRoomHint;
+
+  /// No description provided for @reportEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit report'**
+  String get reportEditTitle;
+
+  /// No description provided for @reportEditSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes saved.'**
+  String get reportEditSuccess;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
   /// No description provided for @reportDialogTitle.
   ///
   /// In en, this message translates to:
@@ -360,7 +400,7 @@ abstract class S {
   /// No description provided for @reportDialogLocationHint.
   ///
   /// In en, this message translates to:
-  /// **'Building, floor, room'**
+  /// **'Building, floor'**
   String get reportDialogLocationHint;
 
   /// No description provided for @reportDialogCategory.
@@ -488,42 +528,6 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Rejected'**
   String get notificationStatusRejected;
-
-  /// No description provided for @reportStatusRejected.
-  ///
-  /// In en, this message translates to:
-  /// **'Rejected'**
-  String get reportStatusRejected;
-
-  /// No description provided for @reportCreateTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'New report'**
-  String get reportCreateTitle;
-
-  /// No description provided for @reportRoomHint.
-  ///
-  /// In en, this message translates to:
-  /// **'e.g. 301'**
-  String get reportRoomHint;
-
-  /// No description provided for @reportEditTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Edit report'**
-  String get reportEditTitle;
-
-  /// No description provided for @reportEditSuccess.
-  ///
-  /// In en, this message translates to:
-  /// **'Changes saved.'**
-  String get reportEditSuccess;
-
-  /// No description provided for @save.
-  ///
-  /// In en, this message translates to:
-  /// **'Save'**
-  String get save;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {
@@ -535,7 +539,8 @@ class _SDelegate extends LocalizationsDelegate<S> {
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'ru'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['en', 'ru'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_SDelegate old) => false;

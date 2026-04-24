@@ -139,6 +139,12 @@ class _HomePageState extends State<HomePage> {
                       selected: _selectedStatus == ReportStatus.resolved,
                       onSelected: (_) => _onFilterChanged(ReportStatus.resolved),
                     ),
+                    ChoiceChip(
+                      label: Text(strings.reportStatusRejected),
+                      labelPadding: const EdgeInsets.symmetric(horizontal: 4),
+                      selected: _selectedStatus == ReportStatus.rejected,
+                      onSelected: (_) => _onFilterChanged(ReportStatus.rejected),
+                    ),
                   ],
                 ),
               ),

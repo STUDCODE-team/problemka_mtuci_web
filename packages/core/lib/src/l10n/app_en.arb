@@ -68,7 +68,7 @@
       "role": {}
     }
   },
-  "reportAppTitle": "University Reporting App",
+  "reportAppTitle": "Problemka MTUCI",
   "@reportAppTitle": {},
   "reportListTitle": "Reports",
   "@reportListTitle": {},
@@ -84,6 +84,8 @@
   "@reportStatusInProgress": {},
   "reportStatusResolved": "Resolved",
   "@reportStatusResolved": {},
+  "reportStatusRejected": "Rejected",
+  "@reportStatusRejected": {},
   "reportDetailTitle": "Report details",
   "@reportDetailTitle": {},
   "reportDetailLocation": "Location",
@@ -100,6 +102,16 @@
   "@reportDetailDate": {},
   "reportNotFound": "Report not found.",
   "@reportNotFound": {},
+  "reportCreateTitle": "New report",
+  "@reportCreateTitle": {},
+  "reportRoomHint": "e.g. 301",
+  "@reportRoomHint": {},
+  "reportEditTitle": "Edit report",
+  "@reportEditTitle": {},
+  "reportEditSuccess": "Changes saved.",
+  "@reportEditSuccess": {},
+  "save": "Save",
+  "@save": {},
   "reportDialogTitle": "Report a problem",
   "@reportDialogTitle": {},
   "reportDialogTopic": "Topic",
@@ -108,7 +120,7 @@
   "@reportDialogTopicHint": {},
   "reportDialogLocation": "Location",
   "@reportDialogLocation": {},
-  "reportDialogLocationHint": "Building, floor, room",
+  "reportDialogLocationHint": "Building, floor",
   "@reportDialogLocationHint": {},
   "reportDialogCategory": "Category",
   "@reportDialogCategory": {},
@@ -153,4 +165,3 @@
   "notificationStatusRejected": "Rejected",
   "@notificationStatusRejected": {}
 }
-  

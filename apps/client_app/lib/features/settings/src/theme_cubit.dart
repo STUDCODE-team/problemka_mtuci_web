@@ -1,9 +1,9 @@
+import 'package:web/web.dart' as web;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// ignore: avoid_web_libraries_in_flutter
-import 'dart:html' as html;
 
 class ThemeCubit extends Cubit<ThemeMode> {
   static const _key = 'theme_mode';
@@ -45,9 +45,9 @@ class ThemeCubit extends Cubit<ThemeMode> {
     if (!kIsWeb) return;
     final color = mode == ThemeMode.light ? _lightColor : _darkColor;
     try {
-      final metas = html.document.querySelectorAll('meta[name="theme-color"]');
-      for (final meta in metas) {
-        meta.setAttribute('content', color);
+      final metas = web.document.querySelectorAll('meta[name="theme-color"]');
+      for (var i = 0; i < metas.length; i++) {
+        (metas.item(i) as web.Element?)?.setAttribute('content', color);
       }
     } catch (_) {}
   }

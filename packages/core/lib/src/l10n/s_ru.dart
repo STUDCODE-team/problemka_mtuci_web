@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 's.dart';
 
 // ignore_for_file: type=lint
@@ -39,7 +38,8 @@ class SRu extends S {
   String get authUnknownEmail => 'Этого email нет в моковой базе.';
 
   @override
-  String get authDemoEmails => 'Демо email: student@mtuci.edu, teacher@mtuci.edu';
+  String get authDemoEmails =>
+      'Демо email: student@mtuci.edu, teacher@mtuci.edu';
 
   @override
   String get authCodeTitle => 'Введите код';
@@ -116,6 +116,9 @@ class SRu extends S {
   String get reportStatusResolved => 'Решено';
 
   @override
+  String get reportStatusRejected => 'Отклонено';
+
+  @override
   String get reportDetailTitle => 'Детали обращения';
 
   @override
@@ -138,6 +141,21 @@ class SRu extends S {
 
   @override
   String get reportNotFound => 'Обращение не найдено.';
+
+  @override
+  String get reportCreateTitle => 'Новое обращение';
+
+  @override
+  String get reportRoomHint => 'напр. 301';
+
+  @override
+  String get reportEditTitle => 'Редактировать обращение';
+
+  @override
+  String get reportEditSuccess => 'Изменения сохранены.';
+
+  @override
+  String get save => 'Сохранить';
 
   @override
   String get reportDialogTitle => 'Сообщить о проблеме';
@@ -216,22 +234,4 @@ class SRu extends S {
 
   @override
   String get notificationStatusRejected => 'Отклонено';
-
-  @override
-  String get reportStatusRejected => 'Отклонено';
-
-  @override
-  String get reportCreateTitle => 'Новое обращение';
-
-  @override
-  String get reportRoomHint => 'напр. 301';
-
-  @override
-  String get reportEditTitle => 'Редактировать обращение';
-
-  @override
-  String get reportEditSuccess => 'Изменения сохранены.';
-
-  @override
-  String get save => 'Сохранить';
 }

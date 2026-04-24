@@ -1,6 +1,5 @@
 // ignore: unused_import
 import 'package:intl/intl.dart' as intl;
-
 import 's.dart';
 
 // ignore_for_file: type=lint
@@ -39,7 +38,8 @@ class SEn extends S {
   String get authUnknownEmail => 'This email is not in the mock database.';
 
   @override
-  String get authDemoEmails => 'Demo emails: student@mtuci.edu, teacher@mtuci.edu';
+  String get authDemoEmails =>
+      'Demo emails: student@mtuci.edu, teacher@mtuci.edu';
 
   @override
   String get authCodeTitle => 'Enter code';
@@ -116,6 +116,9 @@ class SEn extends S {
   String get reportStatusResolved => 'Resolved';
 
   @override
+  String get reportStatusRejected => 'Rejected';
+
+  @override
   String get reportDetailTitle => 'Report details';
 
   @override
@@ -138,6 +141,21 @@ class SEn extends S {
 
   @override
   String get reportNotFound => 'Report not found.';
+
+  @override
+  String get reportCreateTitle => 'New report';
+
+  @override
+  String get reportRoomHint => 'e.g. 301';
+
+  @override
+  String get reportEditTitle => 'Edit report';
+
+  @override
+  String get reportEditSuccess => 'Changes saved.';
+
+  @override
+  String get save => 'Save';
 
   @override
   String get reportDialogTitle => 'Report a problem';
@@ -216,22 +234,4 @@ class SEn extends S {
 
   @override
   String get notificationStatusRejected => 'Rejected';
-
-  @override
-  String get reportStatusRejected => 'Rejected';
-
-  @override
-  String get reportCreateTitle => 'New report';
-
-  @override
-  String get reportRoomHint => 'e.g. 301';
-
-  @override
-  String get reportEditTitle => 'Edit report';
-
-  @override
-  String get reportEditSuccess => 'Changes saved.';
-
-  @override
-  String get save => 'Save';
 }
