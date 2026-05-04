@@ -1,8 +1,8 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:admin_panel/features/auth/src/bloc/auth_bloc.dart';
 import 'package:admin_panel/features/reports/bloc/reports_bloc.dart';
 import 'package:admin_panel/features/reports/models/report.dart';
 import 'package:admin_panel/router/auto_route.gr.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui_kit/ui_kit.dart';
@@ -47,9 +47,7 @@ class _DashboardPageState extends State<DashboardPage> {
     return BlocListener<ReportsBloc, ReportsState>(
       listener: (context, state) {
         if (state is ReportsError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
         }
       },
       child: Scaffold(
@@ -67,6 +65,11 @@ class _DashboardPageState extends State<DashboardPage> {
                 }
                 return const SizedBox.shrink();
               },
+            ),
+            IconButton(
+              icon: const Icon(Icons.settings),
+              tooltip: 'Настройки',
+              onPressed: () => context.router.push(const AdminSettingsRoute()),
             ),
             IconButton(
               icon: const Icon(Icons.logout),
@@ -90,9 +93,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     }
                     return RefreshIndicator(
                       onRefresh: () async {
-                        context
-                            .read<ReportsBloc>()
-                            .add(LoadReports(status: _activeFilter));
+                        context.read<ReportsBloc>().add(LoadReports(status: _activeFilter));
                       },
                       child: ListView.separated(
                         padding: const EdgeInsets.all(16),
@@ -132,14 +133,18 @@ class _FilterBar extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Row(
-        spacing: 8,
         children: filters.map((status) {
           final label = status == null ? 'Все' : status.label;
           final selected = activeFilter == status;
-          return FilterChip(
-            label: Text(label),
-            selected: selected,
-            onSelected: (_) => onFilter(status),
+          return Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: FilterChip(
+              label: Text(label),
+              selected: selected,
+              showCheckmark: false,
+              labelStyle: selected ? const TextStyle(color: Colors.white) : null,
+              onSelected: (_) => onFilter(status),
+            ),
           );
         }).toList(),
       ),

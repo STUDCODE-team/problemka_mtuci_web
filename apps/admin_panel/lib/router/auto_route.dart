@@ -48,6 +48,11 @@ class AppRouter extends RootStackRouter {
           path: '/reports/:reportId',
           guards: [AuthGuard(tokenRepository)],
         ),
+        AutoRoute(
+          page: AdminSettingsRoute.page,
+          path: '/settings',
+          guards: [AuthGuard(tokenRepository)],
+        ),
         // Auth routes
         AutoRoute(page: LoginRoute.page, path: '/login'),
         AutoRoute(page: VerifyCodeRoute.page, path: '/login/verify'),

@@ -15,6 +15,7 @@ import 'package:admin_panel/features/auth/src/pages/verify_code_page.dart'
 import 'package:admin_panel/features/reports/pages/dashboard_page.dart' as _i3;
 import 'package:admin_panel/features/reports/pages/report_detail_page.dart'
     as _i5;
+import 'package:admin_panel/features/settings/settings_page.dart' as _i8;
 import 'package:admin_panel/features/users/pages/users_page.dart' as _i4;
 import 'package:flutter/material.dart' as _i6;
 
@@ -129,4 +130,17 @@ class AdminReportDetailRouteArgs {
   @override
   String toString() =>
       'AdminReportDetailRouteArgs{key: $key, reportId: $reportId}';
+}
+
+/// generated route for [_i8.AdminSettingsPage]
+class AdminSettingsRoute extends _i7.PageRouteInfo<void> {
+  const AdminSettingsRoute({List<_i7.PageRouteInfo>? children})
+      : super(AdminSettingsRoute.name, initialChildren: children);
+
+  static const String name = 'AdminSettingsRoute';
+
+  static _i7.PageInfo page = _i7.PageInfo(
+    name,
+    builder: (data) => const _i8.AdminSettingsPage(),
+  );
 }

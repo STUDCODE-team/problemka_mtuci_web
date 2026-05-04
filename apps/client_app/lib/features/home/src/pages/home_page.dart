@@ -119,30 +119,50 @@ class _HomePageState extends State<HomePage> {
                       label: Text(strings.reportFilterAll),
                       labelPadding: const EdgeInsets.symmetric(horizontal: 4),
                       selected: _selectedStatus == null,
+                      showCheckmark: false,
+                      labelStyle: _selectedStatus == null
+                          ? const TextStyle(color: Colors.white)
+                          : null,
                       onSelected: (_) => _onFilterChanged(null),
                     ),
                     ChoiceChip(
                       label: Text(strings.reportStatusNew),
                       labelPadding: const EdgeInsets.symmetric(horizontal: 4),
                       selected: _selectedStatus == ReportStatus.newReport,
+                      showCheckmark: false,
+                      labelStyle: _selectedStatus == ReportStatus.newReport
+                          ? const TextStyle(color: Colors.white)
+                          : null,
                       onSelected: (_) => _onFilterChanged(ReportStatus.newReport),
                     ),
                     ChoiceChip(
                       label: Text(strings.reportStatusInProgress),
                       labelPadding: const EdgeInsets.symmetric(horizontal: 4),
                       selected: _selectedStatus == ReportStatus.inProgress,
+                      showCheckmark: false,
+                      labelStyle: _selectedStatus == ReportStatus.inProgress
+                          ? const TextStyle(color: Colors.white)
+                          : null,
                       onSelected: (_) => _onFilterChanged(ReportStatus.inProgress),
                     ),
                     ChoiceChip(
                       label: Text(strings.reportStatusResolved),
                       labelPadding: const EdgeInsets.symmetric(horizontal: 4),
                       selected: _selectedStatus == ReportStatus.resolved,
+                      showCheckmark: false,
+                      labelStyle: _selectedStatus == ReportStatus.resolved
+                          ? const TextStyle(color: Colors.white)
+                          : null,
                       onSelected: (_) => _onFilterChanged(ReportStatus.resolved),
                     ),
                     ChoiceChip(
                       label: Text(strings.reportStatusRejected),
                       labelPadding: const EdgeInsets.symmetric(horizontal: 4),
                       selected: _selectedStatus == ReportStatus.rejected,
+                      showCheckmark: false,
+                      labelStyle: _selectedStatus == ReportStatus.rejected
+                          ? const TextStyle(color: Colors.white)
+                          : null,
                       onSelected: (_) => _onFilterChanged(ReportStatus.rejected),
                     ),
                   ],

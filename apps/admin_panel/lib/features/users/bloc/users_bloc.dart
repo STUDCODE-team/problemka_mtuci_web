@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:admin_panel/features/users/models/user_info.dart';
 import 'package:admin_panel/features/users/repositories/users_repository.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // --- Events ---
 
@@ -39,8 +39,8 @@ class UsersBloc extends Bloc<UsersEvent, UsersState> {
   final UsersRepository _repository;
 
   UsersBloc({required UsersRepository repository})
-      : _repository = repository,
-        super(UsersInitial()) {
+    : _repository = repository,
+      super(UsersInitial()) {
     on<LoadUsers>(_onLoad);
     on<SetUserRole>(_onSetRole);
   }

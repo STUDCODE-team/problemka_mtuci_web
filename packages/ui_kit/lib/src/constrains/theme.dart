@@ -7,6 +7,8 @@ import 'radius.dart';
 import 'typography.dart';
 
 class AppTheme {
+  static Future<void> preloadFonts() => GoogleFonts.pendingFonts([GoogleFonts.montserrat()]);
+
   // ─── Light ─────────────────────────────────────────────────────────────────
   static final ThemeData light = ThemeData(
     useMaterial3: true,
@@ -123,7 +125,6 @@ class AppTheme {
       backgroundColor: AppColors.cardLight,
       selectedColor: AppColors.primaryLight,
       labelStyle: GoogleFonts.montserrat(fontSize: 14, color: AppColors.foregroundLight),
-      secondaryLabelStyle: GoogleFonts.montserrat(fontSize: 14, color: Colors.white),
       side: const BorderSide(color: AppColors.borderLight, width: 1),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
     ),
@@ -275,7 +276,6 @@ class AppTheme {
       backgroundColor: AppColors.cardDark,
       selectedColor: AppColors.primaryDark,
       labelStyle: GoogleFonts.montserrat(fontSize: 14, color: AppColors.foregroundDark),
-      secondaryLabelStyle: GoogleFonts.montserrat(fontSize: 14, color: Colors.white),
       side: const BorderSide(color: AppColors.borderDark, width: 1),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
     ),

@@ -4,6 +4,8 @@ import 'package:admin_panel/features/auth/src/auth_repository.dart';
 import 'package:admin_panel/features/auth/src/bloc/auth_bloc.dart';
 import 'package:admin_panel/features/reports/bloc/reports_bloc.dart';
 import 'package:admin_panel/features/reports/repositories/reports_repository.dart';
+import 'package:admin_panel/features/settings/locale_cubit.dart';
+import 'package:admin_panel/features/settings/theme_cubit.dart';
 import 'package:admin_panel/features/users/bloc/users_bloc.dart';
 import 'package:admin_panel/features/users/repositories/users_repository.dart';
 import 'package:admin_panel/router/auto_route.dart';
@@ -29,6 +31,7 @@ void main() async {
 
 Future<void> _bootstrap() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await AppTheme.preloadFonts();
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
@@ -104,6 +107,8 @@ class MyApp extends StatelessWidget {
               ReportsBloc(repository: reportsRepository, usersRepository: usersRepository),
         ),
         BlocProvider(create: (_) => UsersBloc(repository: usersRepository)),
+        BlocProvider(create: (_) => ThemeCubit()),
+        BlocProvider(create: (_) => LocaleCubit()),
       ],
       child: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
@@ -113,19 +118,29 @@ class MyApp extends StatelessWidget {
             appRouter.replaceAll([const LoginRoute()]);
           }
         },
-        child: MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          routerConfig: appRouter.config(),
-          title: 'Админ-панель МТУСИ',
-          theme: AppTheme.light,
-          darkTheme: AppTheme.dark,
-          localizationsDelegates: const [
-            S.delegate,
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: S.supportedLocales,
+        child: BlocBuilder<ThemeCubit, ThemeMode>(
+          builder: (context, themeMode) {
+            return BlocBuilder<LocaleCubit, Locale?>(
+              builder: (context, locale) {
+                return MaterialApp.router(
+                  debugShowCheckedModeBanner: false,
+                  routerConfig: appRouter.config(),
+                  title: 'Админ-панель МТУСИ',
+                  theme: AppTheme.light,
+                  darkTheme: AppTheme.dark,
+                  themeMode: themeMode,
+                  locale: locale,
+                  localizationsDelegates: const [
+                    S.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  supportedLocales: S.supportedLocales,
+                );
+              },
+            );
+          },
         ),
       ),
     );

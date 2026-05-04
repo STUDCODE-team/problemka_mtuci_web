@@ -1,16 +1,15 @@
+import 'package:admin_panel/features/auth/src/bloc/auth_bloc.dart';
+import 'package:admin_panel/features/settings/locale_cubit.dart';
+import 'package:admin_panel/features/settings/theme_cubit.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:client_app/features/auth/src/bloc/auth_bloc.dart';
-import 'package:client_app/features/settings/src/locale_cubit.dart';
-import 'package:client_app/features/settings/src/theme_cubit.dart';
-import 'package:client_app/router/auto_route.gr.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui_kit/ui_kit.dart';
 
-@RoutePage()
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
+@RoutePage(name: 'AdminSettingsRoute')
+class AdminSettingsPage extends StatelessWidget {
+  const AdminSettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,6 @@ class SettingsPage extends StatelessWidget {
               constraints: const BoxConstraints(maxWidth: 600),
               child: ListView(
                 children: [
-                  // Theme
                   ListTile(
                     leading: const Icon(Icons.brightness_6),
                     title: Text(strings.settingsTheme),
@@ -43,8 +41,6 @@ class SettingsPage extends StatelessWidget {
                     ),
                   ),
                   const Divider(),
-
-                  // Language
                   ListTile(
                     leading: const Icon(Icons.language),
                     title: Text(strings.settingsLanguage),
@@ -79,18 +75,13 @@ class SettingsPage extends StatelessWidget {
                     ),
                   ),
                   const Divider(),
-
-                  // Logout
                   ListTile(
                     leading: Icon(Icons.logout, color: context.colors.error),
                     title: Text(
                       strings.settingsLogout,
                       style: TextStyle(color: context.colors.error),
                     ),
-                    onTap: () {
-                      context.read<AuthBloc>().add(AuthLogout());
-                      context.router.replaceAll([const AuthEnterEmailRoute()]);
-                    },
+                    onTap: () => context.read<AuthBloc>().add(AuthLogout()),
                   ),
                 ],
               ),
