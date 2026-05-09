@@ -1,9 +1,9 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:admin_panel/features/reports/models/report.dart';
 import 'package:admin_panel/features/reports/repositories/reports_repository.dart';
 import 'package:admin_panel/features/users/models/user_info.dart';
 import 'package:admin_panel/features/users/repositories/users_repository.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // --- Events ---
 
@@ -101,12 +101,10 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
   final UsersRepository? _usersRepository;
   ReportStatus? _currentFilter;
 
-  ReportsBloc({
-    required ReportsRepository repository,
-    UsersRepository? usersRepository,
-  })  : _repository = repository,
-        _usersRepository = usersRepository,
-        super(ReportsInitial()) {
+  ReportsBloc({required ReportsRepository repository, UsersRepository? usersRepository})
+    : _repository = repository,
+      _usersRepository = usersRepository,
+      super(ReportsInitial()) {
     on<LoadReports>(_onLoad);
     on<ChangeReportStatus>(_onChangeStatus);
     on<LoadAdminReportDetail>(_onLoadDetail);
@@ -126,10 +124,7 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
     }
   }
 
-  Future<void> _onChangeStatus(
-    ChangeReportStatus event,
-    Emitter<ReportsState> emit,
-  ) async {
+  Future<void> _onChangeStatus(ChangeReportStatus event, Emitter<ReportsState> emit) async {
     try {
       final updated = await _repository.changeStatus(event.reportId, event.status);
       emit(ReportStatusChanged(updated));
@@ -140,10 +135,7 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
     }
   }
 
-  Future<void> _onLoadDetail(
-    LoadAdminReportDetail event,
-    Emitter<ReportsState> emit,
-  ) async {
+  Future<void> _onLoadDetail(LoadAdminReportDetail event, Emitter<ReportsState> emit) async {
     emit(AdminDetailLoading());
     try {
       final results = await Future.wait([
@@ -165,21 +157,20 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
         }
       }
 
-      emit(AdminReportDetailLoaded(
-        report: report,
-        comments: comments,
-        history: history,
-        reporter: reporter,
-      ));
+      emit(
+        AdminReportDetailLoaded(
+          report: report,
+          comments: comments,
+          history: history,
+          reporter: reporter,
+        ),
+      );
     } on DioException catch (e) {
       emit(AdminDetailError(_extractError(e)));
     }
   }
 
-  Future<void> _onAddComment(
-    AddAdminComment event,
-    Emitter<ReportsState> emit,
-  ) async {
+  Future<void> _onAddComment(AddAdminComment event, Emitter<ReportsState> emit) async {
     try {
       await _repository.addComment(event.reportId, event.text);
       add(LoadAdminReportDetail(event.reportId));
@@ -188,10 +179,7 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
     }
   }
 
-  Future<void> _onForceChangeStatus(
-    ForceChangeStatus event,
-    Emitter<ReportsState> emit,
-  ) async {
+  Future<void> _onForceChangeStatus(ForceChangeStatus event, Emitter<ReportsState> emit) async {
     try {
       await _repository.forceChangeStatus(event.reportId, event.status);
       add(LoadAdminReportDetail(event.reportId));
@@ -200,10 +188,7 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
     }
   }
 
-  Future<void> _onDeleteReport(
-    DeleteReport event,
-    Emitter<ReportsState> emit,
-  ) async {
+  Future<void> _onDeleteReport(DeleteReport event, Emitter<ReportsState> emit) async {
     try {
       await _repository.deleteReport(event.reportId);
       emit(ReportDeleted());

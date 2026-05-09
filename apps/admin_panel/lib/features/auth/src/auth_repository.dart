@@ -44,14 +44,14 @@ class AuthRepository {
         _tokenRepository = tokenRepository;
 
   Future<void> requestOtp(String email) async {
-    await _apiClient.dio.post('/api/auth/auth/request_otp', data: {
+    await _apiClient.dio.post('/api/auth/request_otp', data: {
       'email': email,
       'role': 'admin',
     });
   }
 
   Future<AuthResult> verifyOtp(String email, String code) async {
-    final response = await _apiClient.dio.post('/api/auth/auth/verify_otp', data: {
+    final response = await _apiClient.dio.post('/api/auth/verify_otp', data: {
       'email': email,
       'code': code,
     });
@@ -73,13 +73,13 @@ class AuthRepository {
   }
 
   Future<UserInfo> getMe() async {
-    final response = await _apiClient.dio.get('/api/auth/auth/me');
+    final response = await _apiClient.dio.get('/api/auth/me');
     return UserInfo.fromJson(response.data as Map<String, dynamic>);
   }
 
   Future<void> logout() async {
     try {
-      await _apiClient.dio.post('/api/auth/auth/logout');
+      await _apiClient.dio.post('/api/auth/logout');
     } on DioException {
       // ignore
     } finally {
@@ -94,7 +94,7 @@ class AuthRepository {
         headers: {'Content-Type': 'application/json'},
         extra: {'withCredentials': true},
       ));
-      await refreshDio.post('/api/auth/auth/refresh');
+      await refreshDio.post('/api/auth/refresh');
       _tokenRepository.setLoggedIn();
       return true;
     } on DioException {

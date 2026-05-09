@@ -130,7 +130,7 @@ void main() {
       expect(params.containsKey('status'), isFalse);
     });
 
-    test('makes GET to /api/reports/reports/my', () async {
+    test('makes GET to /api/reports/my', () async {
       late String requestPath;
       mock.when((opts) {
         requestPath = opts.path;
@@ -139,7 +139,7 @@ void main() {
 
       await repo.fetchMyReports();
 
-      expect(requestPath, '/api/reports/reports/my');
+      expect(requestPath, '/api/reports/my');
     });
   });
 
@@ -168,7 +168,7 @@ void main() {
 
       await repo.getById('xyz-456');
 
-      expect(requestPath, '/api/reports/reports/xyz-456');
+      expect(requestPath, '/api/reports/xyz-456');
     });
   });
 
@@ -211,7 +211,7 @@ void main() {
       expect(report.title, 'Broken light');
     });
 
-    test('makes POST to /api/reports/reports/', () async {
+    test('makes POST to /api/reports/', () async {
       late String requestPath;
       mock.when((opts) {
         requestPath = opts.path;
@@ -222,7 +222,7 @@ void main() {
         title: 'T', description: 'D', location: 'L', category: 'other',
       );
 
-      expect(requestPath, '/api/reports/reports/');
+      expect(requestPath, '/api/reports/');
     });
 
     test('throws DioException on validation error', () async {
@@ -292,7 +292,7 @@ void main() {
 
       await repo.updateReport(reportId: 'r1', title: 'X');
 
-      expect(requestPath, '/api/reports/reports/r1');
+      expect(requestPath, '/api/reports/r1');
     });
   });
 
@@ -364,7 +364,7 @@ void main() {
 
       await repo.getStatusHistory('r1');
 
-      expect(requestPath, '/api/reports/reports/r1/history');
+      expect(requestPath, '/api/reports/r1/history');
     });
   });
 }

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:admin_panel/features/users/bloc/users_bloc.dart';
 import 'package:admin_panel/features/users/models/user_info.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ui_kit/ui_kit.dart';
@@ -35,12 +36,13 @@ class _UsersPageState extends State<UsersPage> {
   }
 
   void _showRolePicker(UserInfo user) {
+    final strings = S.of(context);
     showDialog(
       context: context,
       builder: (ctx) => BlocProvider.value(
         value: context.read<UsersBloc>(),
         child: AlertDialog(
-          title: Text('Роль для ${user.email}'),
+          title: Text(strings.usersRoleFor(user.email)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: _roles.map((role) {
@@ -79,9 +81,10 @@ class _UsersPageState extends State<UsersPage> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('Управление пользователями')),
+        appBar: AppBar(title: Text(S.of(context).usersTitle)),
         body: BlocBuilder<UsersBloc, UsersState>(
           builder: (context, state) {
+            final strings = S.of(context);
             if (state is UsersLoading) {
               return const Center(child: CircularProgressIndicator());
             }
@@ -100,7 +103,7 @@ class _UsersPageState extends State<UsersPage> {
                     child: TextField(
                       controller: _searchController,
                       decoration: InputDecoration(
-                        hintText: 'Поиск по email...',
+                        hintText: strings.usersSearchHint,
                         prefixIcon: const Icon(Icons.search),
                         suffixIcon: _searchQuery.isNotEmpty
                             ? IconButton(
@@ -115,7 +118,7 @@ class _UsersPageState extends State<UsersPage> {
                   ),
                   Expanded(
                     child: filtered.isEmpty
-                        ? const Center(child: Text('Пользователей не найдено.'))
+                        ? Center(child: Text(strings.usersNotFound))
                         : RefreshIndicator(
                             onRefresh: () async =>
                                 context.read<UsersBloc>().add(LoadUsers()),
@@ -129,7 +132,7 @@ class _UsersPageState extends State<UsersPage> {
                                 return ListTile(
                                   title: Text(user.email),
                                   subtitle: Text(
-                                    'Зарегистрирован: ${_fmt(user.createdAt)}',
+                                    strings.usersRegistered(_fmt(user.createdAt)),
                                     style: context.texts.bodySmall,
                                   ),
                                   trailing: Chip(
@@ -147,7 +150,7 @@ class _UsersPageState extends State<UsersPage> {
                 ],
               );
             }
-            return const Center(child: Text('Загрузка...'));
+            return Center(child: Text(strings.usersLoading));
           },
         ),
       ),

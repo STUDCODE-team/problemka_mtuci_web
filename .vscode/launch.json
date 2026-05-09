@@ -13,7 +13,7 @@
       "request": "launch",
       "type": "dart",
       "program": "apps/admin_panel/lib/main.dart",
-      // "args": ["--flavor", "stg", "--dart-define-from-file", ".config.stg.json"]
+      "args": ["--dart-define-from-file", "flutter-env-admin.json", "--web-browser-flag", "--disable-web-security", "--dart-define=SKIP_AUTH=true"]
     },
   ]
 }

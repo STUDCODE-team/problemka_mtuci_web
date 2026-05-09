@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:client_app/features/reports/src/models/report.dart';
 import 'package:client_app/features/reports/src/reports_repository.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // --- Events ---
 
@@ -82,11 +82,7 @@ class ReportDetailLoaded extends ReportsState {
   final Report report;
   final List<ReportComment> comments;
   final List<StatusHistoryEntry> history;
-  ReportDetailLoaded({
-    required this.report,
-    required this.comments,
-    required this.history,
-  });
+  ReportDetailLoaded({required this.report, required this.comments, required this.history});
 }
 
 class ReportCreating extends ReportsState {}
@@ -107,8 +103,8 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
   final ReportsRepository _repository;
 
   ReportsBloc({required ReportsRepository repository})
-      : _repository = repository,
-        super(ReportsInitial()) {
+    : _repository = repository,
+      super(ReportsInitial()) {
     on<LoadMyReports>(_onLoadMyReports);
     on<LoadReportDetail>(_onLoadDetail);
     on<CreateReport>(_onCreateReport);
@@ -134,11 +130,13 @@ class ReportsBloc extends Bloc<ReportsEvent, ReportsState> {
         _repository.getComments(event.reportId),
         _repository.getStatusHistory(event.reportId),
       ]);
-      emit(ReportDetailLoaded(
-        report: results[0] as Report,
-        comments: results[1] as List<ReportComment>,
-        history: results[2] as List<StatusHistoryEntry>,
-      ));
+      emit(
+        ReportDetailLoaded(
+          report: results[0] as Report,
+          comments: results[1] as List<ReportComment>,
+          history: results[2] as List<StatusHistoryEntry>,
+        ),
+      );
     } on DioException catch (e) {
       emit(ReportsError(_extractError(e)));
     }

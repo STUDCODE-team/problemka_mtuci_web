@@ -34,7 +34,7 @@ class AuthInterceptor extends Interceptor {
         extra: {'withCredentials': true},
       ));
 
-      await refreshDio.post('/api/auth/auth/refresh');
+      await refreshDio.post('/api/auth/refresh');
 
       final retryResponse = await dio.fetch(err.requestOptions);
       handler.resolve(retryResponse);

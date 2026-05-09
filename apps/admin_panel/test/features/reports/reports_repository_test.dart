@@ -183,7 +183,7 @@ void main() {
 
       await repo.getReportById('abc-123');
 
-      expect(requestPath, '/api/reports/reports/abc-123');
+      expect(requestPath, '/api/reports/abc-123');
     });
   });
 
@@ -223,7 +223,7 @@ void main() {
 
       await repo.changeStatus('r1', ReportStatus.resolved);
 
-      expect(requestPath, '/api/reports/reports/r1/status');
+      expect(requestPath, '/api/reports/r1/status');
     });
   });
 
@@ -237,7 +237,7 @@ void main() {
 
       await repo.forceChangeStatus('r1', ReportStatus.resolved);
 
-      expect(requestPath, '/api/reports/reports/r1/status/force');
+      expect(requestPath, '/api/reports/r1/status/force');
     });
   });
 
@@ -280,7 +280,7 @@ void main() {
 
       await repo.addComment('r1', 'text');
 
-      expect(requestPath, '/api/reports/reports/r1/comments');
+      expect(requestPath, '/api/reports/r1/comments');
     });
   });
 
@@ -312,7 +312,7 @@ void main() {
 
       await repo.deleteReport('r1');
 
-      expect(requestPath, '/api/reports/reports/r1');
+      expect(requestPath, '/api/reports/r1');
       expect(requestMethod, 'DELETE');
     });
   });

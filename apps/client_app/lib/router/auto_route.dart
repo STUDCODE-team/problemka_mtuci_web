@@ -25,42 +25,37 @@ class AppRouter extends RootStackRouter {
 
   @override
   RouteType get defaultRouteType => RouteType.custom(
-        transitionsBuilder: TransitionsBuilders.fadeIn,
-        duration: const Duration(milliseconds: 180),
-      );
+    transitionsBuilder: TransitionsBuilders.fadeIn,
+    duration: const Duration(milliseconds: 180),
+  );
 
   @override
   List<AutoRoute> get routes => [
-        // Protected routes — guard redirects to login if no token
-        AutoRoute(
-          page: HomeRoute.page,
-          path: '/home',
-          initial: true,
-          guards: [AuthGuard(tokenRepository)],
-        ),
-        AutoRoute(
-          page: ReportDetailRoute.page,
-          path: '/reports/:reportId',
-          guards: [AuthGuard(tokenRepository)],
-        ),
-        AutoRoute(
-          page: CreateReportRoute.page,
-          path: '/reports/create',
-          guards: [AuthGuard(tokenRepository)],
-        ),
-        AutoRoute(
-          page: ReportEditRoute.page,
-          path: '/reports/:reportId/edit',
-          guards: [AuthGuard(tokenRepository)],
-        ),
-        AutoRoute(
-          page: SettingsRoute.page,
-          path: '/settings',
-          guards: [AuthGuard(tokenRepository)],
-        ),
-        // Auth routes — no guard
-        AutoRoute(page: AuthEnterEmailRoute.page, path: '/login'),
-        AutoRoute(page: AuthEnterCodeRoute.page, path: '/login/verify'),
-        AutoRoute(page: AuthSuccessRoute.page, path: '/auth-success'),
-      ];
+    // Protected routes — guard redirects to login if no token
+    AutoRoute(
+      page: HomeRoute.page,
+      path: '/home',
+      initial: true,
+      guards: [AuthGuard(tokenRepository)],
+    ),
+    AutoRoute(
+      page: ReportDetailRoute.page,
+      path: '/reports/:reportId',
+      guards: [AuthGuard(tokenRepository)],
+    ),
+    AutoRoute(
+      page: CreateReportRoute.page,
+      path: '/reports/create',
+      guards: [AuthGuard(tokenRepository)],
+    ),
+    AutoRoute(
+      page: ReportEditRoute.page,
+      path: '/reports/:reportId/edit',
+      guards: [AuthGuard(tokenRepository)],
+    ),
+    AutoRoute(page: SettingsRoute.page, path: '/settings', guards: [AuthGuard(tokenRepository)]),
+    // Auth routes — no guard
+    AutoRoute(page: AuthEnterEmailRoute.page, path: '/login'),
+    AutoRoute(page: AuthEnterCodeRoute.page, path: '/login/verify'),
+  ];
 }

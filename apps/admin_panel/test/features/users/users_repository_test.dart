@@ -95,7 +95,7 @@ void main() {
       expect(users, hasLength(2));
     });
 
-    test('makes GET to /api/auth/auth/users', () async {
+    test('makes GET to /api/auth/users', () async {
       late String requestPath;
       mock.when((opts) {
         requestPath = opts.path;
@@ -104,7 +104,7 @@ void main() {
 
       await repo.getUsers();
 
-      expect(requestPath, '/api/auth/auth/users');
+      expect(requestPath, '/api/auth/users');
     });
 
     test('throws DioException on server error', () async {
@@ -141,7 +141,7 @@ void main() {
 
       await repo.getUserById('abc-999');
 
-      expect(requestPath, '/api/auth/auth/users/abc-999');
+      expect(requestPath, '/api/auth/users/abc-999');
     });
   });
 
@@ -181,7 +181,7 @@ void main() {
 
       await repo.setRole('u1', 'manager');
 
-      expect(requestPath, '/api/auth/auth/users/u1/role');
+      expect(requestPath, '/api/auth/users/u1/role');
       expect(requestMethod, 'PATCH');
     });
 

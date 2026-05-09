@@ -15,7 +15,7 @@ class ReportsRepository {
     if (status != null) params['status'] = status.apiValue;
 
     final response = await _apiClient.dio.get(
-      '/api/reports/reports/',
+      '/api/reports/',
       queryParameters: params,
     );
     final list = response.data as List<dynamic>;
@@ -25,13 +25,13 @@ class ReportsRepository {
   }
 
   Future<ReportDetail> getReportById(String id) async {
-    final response = await _apiClient.dio.get('/api/reports/reports/$id');
+    final response = await _apiClient.dio.get('/api/reports/$id');
     return ReportDetail.fromJson(response.data as Map<String, dynamic>);
   }
 
   Future<ReportDetail> changeStatus(String id, ReportStatus status) async {
     final response = await _apiClient.dio.patch(
-      '/api/reports/reports/$id/status',
+      '/api/reports/$id/status',
       data: {'status': status.apiValue},
     );
     return ReportDetail.fromJson(response.data as Map<String, dynamic>);
@@ -39,33 +39,33 @@ class ReportsRepository {
 
   Future<ReportDetail> forceChangeStatus(String id, ReportStatus status) async {
     final response = await _apiClient.dio.patch(
-      '/api/reports/reports/$id/status/force',
+      '/api/reports/$id/status/force',
       data: {'status': status.apiValue},
     );
     return ReportDetail.fromJson(response.data as Map<String, dynamic>);
   }
 
   Future<List<ReportComment>> getComments(String reportId) async {
-    final response = await _apiClient.dio.get('/api/reports/reports/$reportId/comments');
+    final response = await _apiClient.dio.get('/api/reports/$reportId/comments');
     final list = response.data as List<dynamic>;
     return list.map((json) => ReportComment.fromJson(json as Map<String, dynamic>)).toList();
   }
 
   Future<ReportComment> addComment(String reportId, String text) async {
     final response = await _apiClient.dio.post(
-      '/api/reports/reports/$reportId/comments',
+      '/api/reports/$reportId/comments',
       data: {'text': text},
     );
     return ReportComment.fromJson(response.data as Map<String, dynamic>);
   }
 
   Future<List<StatusHistoryEntry>> getStatusHistory(String reportId) async {
-    final response = await _apiClient.dio.get('/api/reports/reports/$reportId/history');
+    final response = await _apiClient.dio.get('/api/reports/$reportId/history');
     final list = response.data as List<dynamic>;
     return list.map((json) => StatusHistoryEntry.fromJson(json as Map<String, dynamic>)).toList();
   }
 
   Future<void> deleteReport(String id) async {
-    await _apiClient.dio.delete('/api/reports/reports/$id');
+    await _apiClient.dio.delete('/api/reports/$id');
   }
 }
