@@ -234,4 +234,22 @@ class SEn extends S {
 
   @override
   String get notificationStatusRejected => 'Rejected';
+
+  @override
+  String get usersTitle => 'User management';
+
+  @override
+  String usersRoleFor(Object email) => 'Role for $email';
+
+  @override
+  String get usersSearchHint => 'Search by email...';
+
+  @override
+  String get usersNotFound => 'No users found.';
+
+  @override
+  String usersRegistered(Object date) => 'Registered: $date';
+
+  @override
+  String get usersLoading => 'Loading...';
 }

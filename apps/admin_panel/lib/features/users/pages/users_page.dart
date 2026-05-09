@@ -16,10 +16,22 @@ class UsersPage extends StatefulWidget {
 class _UsersPageState extends State<UsersPage> {
   static const _roles = ['user', 'manager', 'admin'];
 
+  final _searchController = TextEditingController();
+  String _searchQuery = '';
+
   @override
   void initState() {
     super.initState();
     context.read<UsersBloc>().add(LoadUsers());
+    _searchController.addListener(() {
+      setState(() => _searchQuery = _searchController.text.trim().toLowerCase());
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   void _showRolePicker(UserInfo user) {
@@ -74,33 +86,65 @@ class _UsersPageState extends State<UsersPage> {
               return const Center(child: CircularProgressIndicator());
             }
             if (state is UsersLoaded) {
-              if (state.users.isEmpty) {
-                return const Center(child: Text('Пользователей нет.'));
-              }
-              return RefreshIndicator(
-                onRefresh: () async =>
-                    context.read<UsersBloc>().add(LoadUsers()),
-                child: ListView.separated(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: state.users.length,
-                  separatorBuilder: (_, __) => const Divider(height: 1),
-                  itemBuilder: (context, index) {
-                    final user = state.users[index];
-                    return ListTile(
-                      title: Text(user.email),
-                      subtitle: Text(
-                        'Зарегистрирован: ${_fmt(user.createdAt)}',
-                        style: context.texts.bodySmall,
+              final filtered = _searchQuery.isEmpty
+                  ? state.users
+                  : state.users
+                      .where((u) =>
+                          u.email.toLowerCase().contains(_searchQuery))
+                      .toList();
+
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 8),
+                    child: TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        hintText: 'Поиск по email...',
+                        prefixIcon: const Icon(Icons.search),
+                        suffixIcon: _searchQuery.isNotEmpty
+                            ? IconButton(
+                                icon: const Icon(Icons.clear),
+                                onPressed: () => _searchController.clear(),
+                              )
+                            : null,
+                        border: const OutlineInputBorder(),
+                        isDense: true,
                       ),
-                      trailing: Chip(
-                        label: Text(user.role),
-                        backgroundColor: _roleColor(user.role),
-                        labelStyle: const TextStyle(color: Colors.white),
-                      ),
-                      onTap: () => _showRolePicker(user),
-                    );
-                  },
-                ),
+                    ),
+                  ),
+                  Expanded(
+                    child: filtered.isEmpty
+                        ? const Center(child: Text('Пользователей не найдено.'))
+                        : RefreshIndicator(
+                            onRefresh: () async =>
+                                context.read<UsersBloc>().add(LoadUsers()),
+                            child: ListView.separated(
+                              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                              itemCount: filtered.length,
+                              separatorBuilder: (_, __) =>
+                                  const Divider(height: 1),
+                              itemBuilder: (context, index) {
+                                final user = filtered[index];
+                                return ListTile(
+                                  title: Text(user.email),
+                                  subtitle: Text(
+                                    'Зарегистрирован: ${_fmt(user.createdAt)}',
+                                    style: context.texts.bodySmall,
+                                  ),
+                                  trailing: Chip(
+                                    label: Text(user.role),
+                                    backgroundColor: _roleColor(user.role),
+                                    labelStyle:
+                                        const TextStyle(color: Colors.white),
+                                  ),
+                                  onTap: () => _showRolePicker(user),
+                                );
+                              },
+                            ),
+                          ),
+                  ),
+                ],
               );
             }
             return const Center(child: Text('Загрузка...'));

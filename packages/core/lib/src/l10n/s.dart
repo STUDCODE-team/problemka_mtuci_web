@@ -528,6 +528,13 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Rejected'**
   String get notificationStatusRejected;
+
+  String get usersTitle;
+  String usersRoleFor(Object email);
+  String get usersSearchHint;
+  String get usersNotFound;
+  String usersRegistered(Object date);
+  String get usersLoading;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

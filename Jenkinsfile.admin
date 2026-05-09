@@ -5,6 +5,7 @@ pipeline {
     timestamps()
     skipDefaultCheckout(true)
     disableResume()
+    buildDiscarder(logRotator(numToKeepStr: '5'))
   }
 
   environment {
@@ -79,9 +80,4 @@ pipeline {
     }
   }
 
-  post {
-    always {
-      archiveArtifacts artifacts: 'build/admin_panel/**', allowEmptyArchive: true
-    }
-  }
 }

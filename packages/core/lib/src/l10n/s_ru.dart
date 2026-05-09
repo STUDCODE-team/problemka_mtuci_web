@@ -234,4 +234,22 @@ class SRu extends S {
 
   @override
   String get notificationStatusRejected => 'Отклонено';
+
+  @override
+  String get usersTitle => 'Управление пользователями';
+
+  @override
+  String usersRoleFor(Object email) => 'Роль для $email';
+
+  @override
+  String get usersSearchHint => 'Поиск по email...';
+
+  @override
+  String get usersNotFound => 'Пользователей не найдено.';
+
+  @override
+  String usersRegistered(Object date) => 'Зарегистрирован: $date';
+
+  @override
+  String get usersLoading => 'Загрузка...';
 }

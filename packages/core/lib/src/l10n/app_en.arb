@@ -163,5 +163,25 @@
   "notificationStatusChanged": "Status changed to",
   "@notificationStatusChanged": {},
   "notificationStatusRejected": "Rejected",
-  "@notificationStatusRejected": {}
+  "@notificationStatusRejected": {},
+  "usersTitle": "User management",
+  "@usersTitle": {},
+  "usersRoleFor": "Role for {email}",
+  "@usersRoleFor": {
+    "placeholders": {
+      "email": {}
+    }
+  },
+  "usersSearchHint": "Search by email...",
+  "@usersSearchHint": {},
+  "usersNotFound": "No users found.",
+  "@usersNotFound": {},
+  "usersRegistered": "Registered: {date}",
+  "@usersRegistered": {
+    "placeholders": {
+      "date": {}
+    }
+  },
+  "usersLoading": "Loading...",
+  "@usersLoading": {}
 }
