@@ -130,7 +130,7 @@ abstract class S {
   /// No description provided for @authEmailHint.
   ///
   /// In en, this message translates to:
-  /// **'sample@mtuci.edu'**
+  /// **'sample@edu.mtuci.ru'**
   String get authEmailHint;
 
   /// No description provided for @authSendCode.
@@ -214,7 +214,7 @@ abstract class S {
   /// No description provided for @authSuccessTitle.
   ///
   /// In en, this message translates to:
-  /// **'You're in'**
+  /// **'You\'re in'**
   String get authSuccessTitle;
 
   /// No description provided for @authSuccessSubtitle.
@@ -244,7 +244,7 @@ abstract class S {
   /// No description provided for @reportAppTitle.
   ///
   /// In en, this message translates to:
-  /// **'University Reporting App'**
+  /// **'Problemka MTUCI'**
   String get reportAppTitle;
 
   /// No description provided for @reportListTitle.
@@ -288,6 +288,12 @@ abstract class S {
   /// In en, this message translates to:
   /// **'Resolved'**
   String get reportStatusResolved;
+
+  /// No description provided for @reportStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get reportStatusRejected;
 
   /// No description provided for @reportDetailTitle.
   ///
@@ -337,6 +343,36 @@ abstract class S {
   /// **'Report not found.'**
   String get reportNotFound;
 
+  /// No description provided for @reportCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New report'**
+  String get reportCreateTitle;
+
+  /// No description provided for @reportRoomHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g. 301'**
+  String get reportRoomHint;
+
+  /// No description provided for @reportEditTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit report'**
+  String get reportEditTitle;
+
+  /// No description provided for @reportEditSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes saved.'**
+  String get reportEditSuccess;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
   /// No description provided for @reportDialogTitle.
   ///
   /// In en, this message translates to:
@@ -364,7 +400,7 @@ abstract class S {
   /// No description provided for @reportDialogLocationHint.
   ///
   /// In en, this message translates to:
-  /// **'Building, floor, room'**
+  /// **'Building, floor'**
   String get reportDialogLocationHint;
 
   /// No description provided for @reportDialogCategory.
@@ -400,8 +436,105 @@ abstract class S {
   /// No description provided for @reportDialogSuccess.
   ///
   /// In en, this message translates to:
-  /// **'Report submitted (mock).'**
+  /// **'Report submitted.'**
   String get reportDialogSuccess;
+
+  /// No description provided for @reportCommentsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments'**
+  String get reportCommentsTitle;
+
+  /// No description provided for @reportCommentsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No comments yet.'**
+  String get reportCommentsEmpty;
+
+  /// No description provided for @reportCommentHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a comment...'**
+  String get reportCommentHint;
+
+  /// No description provided for @reportHistoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Status history'**
+  String get reportHistoryTitle;
+
+  /// No description provided for @settingsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// No description provided for @settingsTheme.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get settingsTheme;
+
+  /// No description provided for @settingsThemeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get settingsThemeLight;
+
+  /// No description provided for @settingsThemeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get settingsThemeDark;
+
+  /// No description provided for @settingsLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get settingsLanguage;
+
+  /// No description provided for @settingsLogout.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get settingsLogout;
+
+  /// No description provided for @notificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsTitle;
+
+  /// No description provided for @notificationsEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications yet.'**
+  String get notificationsEmpty;
+
+  /// No description provided for @notificationsMarkAllRead.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all as read'**
+  String get notificationsMarkAllRead;
+
+  /// No description provided for @notificationStatusChanged.
+  ///
+  /// In en, this message translates to:
+  /// **'Status changed to'**
+  String get notificationStatusChanged;
+
+  /// No description provided for @notificationStatusRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Rejected'**
+  String get notificationStatusRejected;
+
+  String get usersTitle;
+  String usersRoleFor(Object email);
+  String get usersSearchHint;
+  String get usersNotFound;
+  String usersRegistered(Object date);
+  String get usersLoading;
 }
 
 class _SDelegate extends LocalizationsDelegate<S> {

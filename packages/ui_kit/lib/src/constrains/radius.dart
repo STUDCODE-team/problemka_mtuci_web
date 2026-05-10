@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AppRadius {
-  static const double radiusBase = 10;
-  static const double radiusSm = 6;
-  static const double radiusMd = 8;
-  static const double radiusLg = 10;
-  static const double radiusXl = 14;
+  static const double radiusBase = 16;
+  static const double radiusSm = 8;
+  static const double radiusMd = 12;
+  static const double radiusLg = 16;
+  static const double radiusXl = 20;
   static const double radiusFull = 9999;
 
   static BorderRadius circular = BorderRadius.circular(radiusBase);

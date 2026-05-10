@@ -20,13 +20,13 @@ class SRu extends S {
   String get authTitle => 'Вход';
 
   @override
-  String get authSubtitle => 'Система отчетов университета МТУСИ';
+  String get authSubtitle => 'Система обращений университета МТУСИ';
 
   @override
   String get authEmailLabel => 'Email';
 
   @override
-  String get authEmailHint => 'sample@mtuci.edu';
+  String get authEmailHint => 'sample@edu.mtuci.ru';
 
   @override
   String get authSendCode => 'Отправить код';
@@ -38,7 +38,8 @@ class SRu extends S {
   String get authUnknownEmail => 'Этого email нет в моковой базе.';
 
   @override
-  String get authDemoEmails => 'Демо email: student@mtuci.edu, teacher@mtuci.edu';
+  String get authDemoEmails =>
+      'Демо email: student@mtuci.edu, teacher@mtuci.edu';
 
   @override
   String get authCodeTitle => 'Введите код';
@@ -91,16 +92,16 @@ class SRu extends S {
   }
 
   @override
-  String get reportAppTitle => 'University Reporting App';
+  String get reportAppTitle => 'Problemka MTUCI';
 
   @override
-  String get reportListTitle => 'Отчеты';
+  String get reportListTitle => 'Обращения';
 
   @override
   String get reportFilterAll => 'Все';
 
   @override
-  String get reportListEmpty => 'Отчетов пока нет.';
+  String get reportListEmpty => 'Заявок пока нет.';
 
   @override
   String get reportCreateButton => 'Сообщить о проблеме';
@@ -115,7 +116,10 @@ class SRu extends S {
   String get reportStatusResolved => 'Решено';
 
   @override
-  String get reportDetailTitle => 'Детали отчета';
+  String get reportStatusRejected => 'Отклонено';
+
+  @override
+  String get reportDetailTitle => 'Детали обращения';
 
   @override
   String get reportDetailLocation => 'Место';
@@ -136,7 +140,22 @@ class SRu extends S {
   String get reportDetailDate => 'Дата';
 
   @override
-  String get reportNotFound => 'Отчет не найден.';
+  String get reportNotFound => 'Обращение не найдено.';
+
+  @override
+  String get reportCreateTitle => 'Новое обращение';
+
+  @override
+  String get reportRoomHint => 'напр. 301';
+
+  @override
+  String get reportEditTitle => 'Редактировать обращение';
+
+  @override
+  String get reportEditSuccess => 'Изменения сохранены.';
+
+  @override
+  String get save => 'Сохранить';
 
   @override
   String get reportDialogTitle => 'Сообщить о проблеме';
@@ -151,7 +170,7 @@ class SRu extends S {
   String get reportDialogLocation => 'Расположение';
 
   @override
-  String get reportDialogLocationHint => 'Корпус, этаж, кабинет';
+  String get reportDialogLocationHint => 'Корпус, этаж';
 
   @override
   String get reportDialogCategory => 'Категория';
@@ -169,5 +188,68 @@ class SRu extends S {
   String get reportDialogSubmit => 'Отправить';
 
   @override
-  String get reportDialogSuccess => 'Отчет отправлен (mock).';
+  String get reportDialogSuccess => 'Обращение отправлено.';
+
+  @override
+  String get reportCommentsTitle => 'Комментарии';
+
+  @override
+  String get reportCommentsEmpty => 'Комментариев пока нет.';
+
+  @override
+  String get reportCommentHint => 'Написать комментарий...';
+
+  @override
+  String get reportHistoryTitle => 'История статусов';
+
+  @override
+  String get settingsTitle => 'Настройки';
+
+  @override
+  String get settingsTheme => 'Тема оформления';
+
+  @override
+  String get settingsThemeLight => 'Светлая';
+
+  @override
+  String get settingsThemeDark => 'Тёмная';
+
+  @override
+  String get settingsLanguage => 'Язык интерфейса';
+
+  @override
+  String get settingsLogout => 'Выйти из аккаунта';
+
+  @override
+  String get notificationsTitle => 'Уведомления';
+
+  @override
+  String get notificationsEmpty => 'Уведомлений пока нет.';
+
+  @override
+  String get notificationsMarkAllRead => 'Прочитать все';
+
+  @override
+  String get notificationStatusChanged => 'Статус изменён на';
+
+  @override
+  String get notificationStatusRejected => 'Отклонено';
+
+  @override
+  String get usersTitle => 'Управление пользователями';
+
+  @override
+  String usersRoleFor(Object email) => 'Роль для $email';
+
+  @override
+  String get usersSearchHint => 'Поиск по email...';
+
+  @override
+  String get usersNotFound => 'Пользователей не найдено.';
+
+  @override
+  String usersRegistered(Object date) => 'Зарегистрирован: $date';
+
+  @override
+  String get usersLoading => 'Загрузка...';
 }

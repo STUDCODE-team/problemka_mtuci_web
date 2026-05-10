@@ -1,0 +1,5 @@
+{
+  "API_BASE_URL": "https://devapi.problemka-mtuci.tech",
+  "GLITCHTIP_DSN": "https://225c4a921e2c40d8ac3c8b9837ae5ed2@glitchtip.problemka-mtuci.tech/2",
+  "APP_ENV": "dev"
+}

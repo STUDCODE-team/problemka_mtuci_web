@@ -26,7 +26,7 @@ class SEn extends S {
   String get authEmailLabel => 'Email';
 
   @override
-  String get authEmailHint => 'sample@mtuci.edu';
+  String get authEmailHint => 'sample@edu.mtuci.ru';
 
   @override
   String get authSendCode => 'Send code';
@@ -38,7 +38,8 @@ class SEn extends S {
   String get authUnknownEmail => 'This email is not in the mock database.';
 
   @override
-  String get authDemoEmails => 'Demo emails: student@mtuci.edu, teacher@mtuci.edu';
+  String get authDemoEmails =>
+      'Demo emails: student@mtuci.edu, teacher@mtuci.edu';
 
   @override
   String get authCodeTitle => 'Enter code';
@@ -72,7 +73,7 @@ class SEn extends S {
   }
 
   @override
-  String get authSuccessTitle => "You're in";
+  String get authSuccessTitle => 'You\'re in';
 
   @override
   String authSuccessSubtitle(Object name) {
@@ -91,7 +92,7 @@ class SEn extends S {
   }
 
   @override
-  String get reportAppTitle => 'University Reporting App';
+  String get reportAppTitle => 'Problemka MTUCI';
 
   @override
   String get reportListTitle => 'Reports';
@@ -113,6 +114,9 @@ class SEn extends S {
 
   @override
   String get reportStatusResolved => 'Resolved';
+
+  @override
+  String get reportStatusRejected => 'Rejected';
 
   @override
   String get reportDetailTitle => 'Report details';
@@ -139,6 +143,21 @@ class SEn extends S {
   String get reportNotFound => 'Report not found.';
 
   @override
+  String get reportCreateTitle => 'New report';
+
+  @override
+  String get reportRoomHint => 'e.g. 301';
+
+  @override
+  String get reportEditTitle => 'Edit report';
+
+  @override
+  String get reportEditSuccess => 'Changes saved.';
+
+  @override
+  String get save => 'Save';
+
+  @override
   String get reportDialogTitle => 'Report a problem';
 
   @override
@@ -151,7 +170,7 @@ class SEn extends S {
   String get reportDialogLocation => 'Location';
 
   @override
-  String get reportDialogLocationHint => 'Building, floor, room';
+  String get reportDialogLocationHint => 'Building, floor';
 
   @override
   String get reportDialogCategory => 'Category';
@@ -169,5 +188,68 @@ class SEn extends S {
   String get reportDialogSubmit => 'Send';
 
   @override
-  String get reportDialogSuccess => 'Report submitted (mock).';
+  String get reportDialogSuccess => 'Report submitted.';
+
+  @override
+  String get reportCommentsTitle => 'Comments';
+
+  @override
+  String get reportCommentsEmpty => 'No comments yet.';
+
+  @override
+  String get reportCommentHint => 'Write a comment...';
+
+  @override
+  String get reportHistoryTitle => 'Status history';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsTheme => 'Theme';
+
+  @override
+  String get settingsThemeLight => 'Light';
+
+  @override
+  String get settingsThemeDark => 'Dark';
+
+  @override
+  String get settingsLanguage => 'Language';
+
+  @override
+  String get settingsLogout => 'Log out';
+
+  @override
+  String get notificationsTitle => 'Notifications';
+
+  @override
+  String get notificationsEmpty => 'No notifications yet.';
+
+  @override
+  String get notificationsMarkAllRead => 'Mark all as read';
+
+  @override
+  String get notificationStatusChanged => 'Status changed to';
+
+  @override
+  String get notificationStatusRejected => 'Rejected';
+
+  @override
+  String get usersTitle => 'User management';
+
+  @override
+  String usersRoleFor(Object email) => 'Role for $email';
+
+  @override
+  String get usersSearchHint => 'Search by email...';
+
+  @override
+  String get usersNotFound => 'No users found.';
+
+  @override
+  String usersRegistered(Object date) => 'Registered: $date';
+
+  @override
+  String get usersLoading => 'Loading...';
 }

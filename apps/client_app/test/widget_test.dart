@@ -1,30 +1,24 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:client_app/features/reports/src/models/report.dart';
 
-import 'package:client_app/main.dart';
-
+// Smoke-тест: проверяет, что ключевые классы доступны для импорта
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  test('ReportStatus доступен и имеет корректные значения', () {
+    expect(ReportStatus.values.length, 4);
+    expect(ReportStatus.values, contains(ReportStatus.newReport));
+    expect(ReportStatus.values, contains(ReportStatus.inProgress));
+    expect(ReportStatus.values, contains(ReportStatus.resolved));
+    expect(ReportStatus.values, contains(ReportStatus.rejected));
+  });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  test('ReportCategory имеет все ожидаемые категории', () {
+    expect(ReportCategory.values.length, 7);
+    expect(
+      ReportCategory.values.map((c) => c.apiValue),
+      containsAll([
+        'electrical', 'plumbing', 'furniture',
+        'it_equipment', 'cleaning', 'heating', 'other',
+      ]),
+    );
   });
 }

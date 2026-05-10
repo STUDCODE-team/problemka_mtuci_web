@@ -5,6 +5,7 @@ pipeline {
     timestamps()
     skipDefaultCheckout(true)
     disableResume()
+    buildDiscarder(logRotator(numToKeepStr: '5'))
   }
 
   environment {
@@ -27,9 +28,11 @@ pipeline {
       steps {
         sh '''
           set -eux
+          "${FLUTTER_BIN}" config --no-analytics
           "${FLUTTER_BIN}" --version
           "${DART_BIN}" --version
           "${FLUTTER_BIN}" config --enable-web
+          "${FLUTTER_BIN}" precache --web
         '''
       }
     }
@@ -44,12 +47,22 @@ pipeline {
     }
 
     stage('Build client app') {
+      options {
+        timeout(time: 40, unit: 'MINUTES')
+      }
       steps {
-        dir('apps/client_app') {
-          sh '''
-            set -eux
-            "${FLUTTER_BIN}" build web --release --no-pub --no-tree-shake-icons --no-wasm-dry-run --output="${WORKSPACE}/build/client_app"
-          '''
+        withCredentials([file(credentialsId: 'flutter-env-client', variable: 'FLUTTER_ENV_FILE')]) {
+          dir('apps/client_app') {
+            sh '''
+              set -eux
+              "${FLUTTER_BIN}" build web \
+                --release \
+                --no-pub \
+                --no-tree-shake-icons \
+                --dart-define-from-file="${FLUTTER_ENV_FILE}" \
+                --output="${WORKSPACE}/build/client_app"
+            '''
+          }
         }
       }
     }
@@ -71,9 +84,4 @@ pipeline {
     }
   }
 
-  post {
-    always {
-      archiveArtifacts artifacts: 'build/client_app/**', allowEmptyArchive: true
-    }
-  }
 }
